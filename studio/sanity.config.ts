@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 // import { schemaTypes } from './schemaTypes'
-const schemaTypes: any[] = []
+const schemaTypes: never[] = []
 
 const SINGLETON_TYPES = new Set( [ 'siteSettings', 'homePage' ] )
 const SINGLETON_ACTIONS = new Set( [ 'publish', 'discardChanges', 'restore' ] )
