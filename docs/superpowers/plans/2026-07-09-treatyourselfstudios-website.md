@@ -199,9 +199,12 @@ preview: ## Preview the production build locally
 	yarn preview
 
 check: ## Run everything CI runs: types, lint, build
-	yarn check
+	yarn run check
 	yarn lint
 	yarn build
+
+# NOTE: `yarn run check`, not `yarn check` — in yarn classic, bare `yarn check`
+# invokes yarn's built-in integrity command and silently skips the package script.
 
 lint: ## Run ESLint
 	yarn lint
@@ -2364,7 +2367,9 @@ jobs:
           node-version: "22.13"
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: yarn check
+      # `yarn run check`, not `yarn check` — the bare form is yarn v1's built-in
+      # integrity command and silently skips the package script.
+      - run: yarn run check
         env:
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
