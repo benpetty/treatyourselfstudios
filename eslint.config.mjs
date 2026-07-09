@@ -11,7 +11,11 @@ export default typescriptEslint.config(
   {
     rules: {
       "space-in-parens": ["error", "always"],
-      "id-length": ["error", { "min": 2, "exceptions": ["_"] }]
+      "id-length": ["error", { "min": 2, "exceptions": ["_"] }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+      ]
     }
   }
 );
