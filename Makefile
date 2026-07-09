@@ -21,8 +21,10 @@ build: ## Build the production site to ./dist/
 preview: ## Preview the production build locally
 	yarn preview
 
+# NOTE: `yarn run check`, not `yarn check` — in yarn classic, bare `yarn check`
+# invokes yarn's built-in integrity command and silently skips the package script.
 check: ## Run everything CI runs: types, lint, build
-	yarn check
+	yarn run check
 	yarn lint
 	yarn build
 
