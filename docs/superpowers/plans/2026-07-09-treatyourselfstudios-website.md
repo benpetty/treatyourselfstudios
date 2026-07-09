@@ -9,7 +9,25 @@
 **Tech Stack:** Astro 6, strict TypeScript, Sanity v5 (Studio in `studio/`), `@sanity/client`, `@astrojs/sitemap`, `astro-portabletext`, Fontsource (Fraunces + Inter), ESLint, yarn (classic), GitHub Actions, GitHub Pages, Formspree.
 
 **Spec:** `docs/superpowers/specs/2026-07-09-treatyourselfstudios-redesign-design.md` — read it first. Two deliberate refinements from the spec's content-model table: the `package` document type is named `servicePackage` (avoids colliding with npm vocabulary), and the spec's `page` singletons became a single `homePage` singleton — the About page's short studio-story is page furniture hardcoded in `about.astro` (YAGNI; team bios and testimonials, the parts the owner actually updates, ARE in Sanity).
-**Source content:** `docs/content-audit/*.txt` (scraped copy from the old site) and `docs/content-audit/images/` (the studio's 13 original photos/logo). The Getty stock image was deliberately NOT archived — its license doesn't transfer.
+**Source content:** `docs/content-audit/*.txt` (scraped copy from the old site) and `docs/content-audit/images/` (the studio's 13 original photos). The Getty stock image was deliberately NOT archived — its license doesn't transfer.
+
+**Image inventory (controller-verified by visual inspection — these assignments are authoritative):**
+
+| File | Actual content | Use |
+|---|---|---|
+| `E998EFC5-…22.png` | Smiling client, face masque, pink bg (the old site's recurring brand image) | homePage heroImage |
+| `49AF74D4-…34.png` | Saphiyah headshot (name embroidered on scrubs) | team-saphiyah photo |
+| `FF0554C5-…26.jpg` | Professional circular headshot, woman in spa room | team-nichele photo (user-confirmed) |
+| `9833A5C9-…27.jpeg` | Leg wax strip application in progress | hair-removal category heroImage |
+| `blob-0009.png` | Serene facial masque application with brush | facials category heroImage |
+| `B9C316FC-…B1.jpeg` | Lash extensions + brow close-up | lash-and-brow category heroImage |
+| `06B33C38-…E8.jpeg` | Back masque treatment (back facial) | body-treatments category heroImage |
+| `IMG_6988.jpg` | Two bowls of masque product with flowers | add-ons category heroImage |
+| `IMG_4750.jpg` | Gift card box ("Give the perfect gift") | `public/images/gift-cards.jpg` for GiftCardCallout (Task 8) |
+| `IMG_2745.jpeg` | Studio building exterior (Columbia City Abbey) | `public/images/studio-exterior.jpg` for LocationMap (Task 12) |
+| `26ADA3C5-…01.jpeg`, `7793D2CD-…6B.jpeg`, `VineyardGrapeFacial_…jpg` | Legs w/ flower; man's brows; seasonal-facial vendor art | unassigned — owner may add via Studio |
+
+**There is no logo image.** The old site's header was text. Seed data omits `siteSettings.logo`; Nav and Footer must render the site title as styled text (display serif) when `logo` is absent, and BaseHead's og:image renders only when a logo exists (the owner can upload one in Studio later).
 
 ## Global Constraints
 
@@ -1225,7 +1243,6 @@ export async function buildSiteSettings( client: SanityClient ) {
     tagline: "The best journey in life is the journey back to yourself.",
     siteDescription:
       "Appointment-only esthetics studio in Seattle offering custom facials, waxing, lash & brow services, and body treatments. Treat yourself — book online today.",
-    logo: await uploadImage( client, "docs/content-audit/images/E998EFC5-BF68-45F2-8B0E-56BC3026C222.png", "Treat YourSelf Studios logo" ),
     phone: "(206) 717-4843",
     phoneE164: "+12067174843",
     address: { street: "3902 S Ferdinand St Unit 101", city: "Seattle", state: "WA", zip: "98118" },
@@ -1245,7 +1262,7 @@ export async function buildSiteSettings( client: SanityClient ) {
 }
 ```
 
-(`shopUrl` intentionally omitted until the owner confirms the Square Online store URL — Task 15 checklist. The Shop nav link renders only when `shopUrl` is set.)
+(`shopUrl` intentionally omitted until the owner confirms the Square Online store URL — Task 15 checklist. The Shop nav link renders only when `shopUrl` is set. `logo` intentionally omitted — no logo asset exists; see the image inventory table.)
 
 - [ ] **Step 4: Write `scripts/seed-data/homePage.ts`** (complete)
 
@@ -1260,7 +1277,7 @@ export async function buildHomePage( client: SanityClient ) {
     heroHeading: "Take a well-deserved break — treat yourself.",
     heroSubheading:
       "Custom facials, expert waxing, and restorative body treatments in a calm, one-on-one studio in Seattle. By appointment only.",
-    heroImage: await uploadImage( client, "docs/content-audit/images/9833A5C9-9F7E-47CB-980A-219960F3B827_1_105_c.jpeg", "Warm, softly lit treatment room at Treat YourSelf Studios" ),
+    heroImage: await uploadImage( client, "docs/content-audit/images/E998EFC5-BF68-45F2-8B0E-56BC3026C222.png", "Smiling client with a fresh facial masque at Treat YourSelf Studios" ),
     welcomeHeading: "The best journey in life is the journey back to yourself",
     welcomeBody: richText( [
       "Step away from the stress of your busy day and focus on you. At Treat YourSelf Studios, every visit is one-on-one: your esthetician's full attention, a full range of professional treatments, and products that are all-natural, cruelty-free, and free of parabens, synthetic dyes, and fragrances.",
@@ -1393,14 +1410,14 @@ export async function buildTeamMembers( client: SanityClient ) {
       bio: richText( [
         "Hi, I'm Saphiyah! I'm a licensed esthetician who loves helping people look and feel their best. My goal is to provide relaxing, results-driven treatments tailored to each client's unique skincare needs — leaving you refreshed, confident, and glowing.",
       ] ),
-      photo: await uploadImage( client, "docs/content-audit/images/B9C316FC-FE9B-4962-9C14-7F007B3808A1_1_105_c.jpeg", "Saphiyah, esthetician and lash specialist at Treat YourSelf Studios" ),
+      photo: await uploadImage( client, "docs/content-audit/images/49AF74D4-DC29-4BDD-9DD7-03D105311934.png", "Saphiyah, esthetician and lash specialist at Treat YourSelf Studios" ),
       order: 2,
     },
   ];
 }
 ```
 
-**Image-to-person check `[HUMAN]`:** the two photo filenames above are best guesses from page placement on the old site. Before seeding, open both files and confirm with the user they're the right headshots (and that the hero image choice is right). Swap filenames if not.
+**Image-to-person check:** resolved by controller visual inspection — Saphiyah's photo (`49AF74D4`) is confirmed by the name embroidered on her scrubs; Nichele's (`FF0554C5`) is the only professional headshot remaining and is user-confirmed. The image inventory table at the top of this plan is authoritative.
 
 - [ ] **Step 6: Run the seed and verify counts**
 
@@ -1472,7 +1489,7 @@ export async function buildServiceContent( client: SanityClient ) {
         "Plan to come back every 3–5 weeks. Regular maintenance lets your skin acclimate, slows regrowth, and makes each visit more comfortable than the last.",
         "Please note: epilation during your period may heighten discomfort, and sensitive skin can experience minor breakouts. If you notice signs of infection, have it evaluated by a doctor promptly.",
       ] ),
-      heroImage: await uploadImage( client, "docs/content-audit/images/IMG_6988.jpg", "Smooth skin after a professional waxing service" ),
+      heroImage: await uploadImage( client, "docs/content-audit/images/9833A5C9-9F7E-47CB-980A-219960F3B827_1_105_c.jpeg", "Esthetician applying a wax strip during a leg waxing service" ),
     },
     // ... category-facials (order 2), category-lash-and-brow (order 3),
     // category-body-treatments (order 4), category-add-ons (order 5, isAddOnCategory: true)
@@ -1749,7 +1766,7 @@ const localBusiness = {
 <JsonLd data={ localBusiness } />
 ```
 
-- [ ] **Step 5: Write `src/components/Nav.astro`** — sticky header: logo (links home), links `Services` (CSS-hover/focus dropdown of the four non-add-on categories + "All Services"), `Packages & Deals` → `/packages/`, `About` → `/about/`, `FAQ` → `/faq/`, `Contact` → `/contact/`, utility row with `Gift Cards` (external, `settings.giftCardUrl`), `Shop` (external, rendered only if `settings.shopUrl`), phone link, and a `.button` "Book Now" → `settings.bookingUrl`. Mobile: hamburger `<button aria-expanded>` toggling a full-width menu via ~10 lines of inline `<script>`; menu is plain stacked links (no dropdown nesting on mobile). If `settings.firstVisitOffer` is set, render it as a slim announcement bar above the header. Fetch categories inside the component with `getServiceCategories()` and filter out `isAddOnCategory`. All external links get `rel="noopener"`. Complete code is the executor's to write within these constraints; keep it under ~120 lines including styles (scoped `<style>`).
+- [ ] **Step 5: Write `src/components/Nav.astro`** — sticky header: brand mark linking home (the `settings.logo` image when present, else `settings.siteTitle` as styled display-serif text — the seed provides no logo, so the text path is the one that ships), links `Services` (CSS-hover/focus dropdown of the four non-add-on categories + "All Services"), `Packages & Deals` → `/packages/`, `About` → `/about/`, `FAQ` → `/faq/`, `Contact` → `/contact/`, utility row with `Gift Cards` (external, `settings.giftCardUrl`), `Shop` (external, rendered only if `settings.shopUrl`), phone link, and a `.button` "Book Now" → `settings.bookingUrl`. Mobile: hamburger `<button aria-expanded>` toggling a full-width menu via ~10 lines of inline `<script>`; menu is plain stacked links (no dropdown nesting on mobile). If `settings.firstVisitOffer` is set, render it as a slim announcement bar above the header. Fetch categories inside the component with `getServiceCategories()` and filter out `isAddOnCategory`. All external links get `rel="noopener"`. Complete code is the executor's to write within these constraints; keep it under ~120 lines including styles (scoped `<style>`).
 
 - [ ] **Step 6: Write `src/components/Footer.astro`** — three columns: (1) logo + tagline + social links; (2) NAP block — business name, full address, phone `tel:` link, hours note, all as plain text matching `siteSettings` exactly, wrapped in `<address>`; (3) quick links (all nav pages + Gift Cards + Shop + Terms). Bottom line: `© 2017–{currentYear} Treat YourSelf Studios`. Consumes `settings` prop.
 
@@ -1846,7 +1863,7 @@ const { value } = Astro.props;
   3. Service categories — grid of `CategoryCard` (image, title, 1-line teaser from `seoDescription`, link `/services/{slug}/`), excluding `isAddOnCategory`
   4. `DealBanner` — blush-tinted strip listing the three deals compactly, link → `/packages/#deals`
   5. Testimonials — horizontal row of 3 `TestimonialCard` (quote, attribution + location, decorative quotation mark)
-  6. `GiftCardCallout` — card: "Give the gift of self-care", outbound button to Square gift cards
+  6. `GiftCardCallout` — card: "Give the gift of self-care", outbound button to Square gift cards; image side: copy `docs/content-audit/images/IMG_4750.jpg` to `public/images/gift-cards.jpg` and render it (it's the studio's own gift-card box photo)
   7. `HoursLocation` — address block, "By appointment only", phone, "Get Directions" link to `https://maps.google.com/?q=3902+S+Ferdinand+St+Unit+101+Seattle+WA+98118` (build the query string from `settings.address` fields, URL-encoded — never hardcode)
 
 All images from Sanity get explicit `width`/`height` attributes and below-the-fold ones `loading="lazy"`. Page title/description come from `homePage.seoTitle`/`homePage.seoDescription` (title suffixed ` | Treat YourSelf Studios` in the page, not the layout).
@@ -2183,7 +2200,7 @@ const { phone, phoneE164, bookingUrl } = Astro.props;
 
 (Plain `method="POST" action=…` keeps the form functional even with JS disabled — Formspree shows its hosted thank-you page in that case.)
 
-- [ ] **Step 3: Write `LocationMap.astro`** — a `.card` containing an accessible address block and a "Get Directions" `.button--outline` linking to the Google Maps query URL built from `settings.address`. No map image initially (the owner may supply a storefront photo later — the card design leaves an image slot: render `settings.logo` blurred as a decorative background at 20% opacity instead). No third-party map embeds.
+- [ ] **Step 3: Write `LocationMap.astro`** — a `.card` containing an accessible address block and a "Get Directions" `.button--outline` linking to the Google Maps query URL built from `settings.address`. Image: copy `docs/content-audit/images/IMG_2745.jpeg` to `public/images/studio-exterior.jpg` and render it above the address block (it's the studio's building, Columbia City Abbey — exactly what someone navigating there needs to recognize). No third-party map embeds.
 
 - [ ] **Step 4: Write `contact.astro`** — two-column (stacking): left `ContactForm` + note "Prefer to talk? Call or text (206) 717-4843" + email link if set; right `LocationMap` + hours card ("By appointment only — book online any time" + Book Now button). Title: `Contact & Location | Treat YourSelf Studios`.
 
