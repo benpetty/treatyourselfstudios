@@ -1,0 +1,85 @@
+---
+import { formatDuration, formatPrice, formatPriceLabels } from "../lib/format";
+import type { ServicePackage } from "../lib/sanity";
+import PortableText from "./PortableText.astro";
+
+interface Props {
+  servicePackage: ServicePackage;
+}
+const { servicePackage } = Astro.props;
+const priceLabels = formatPriceLabels( servicePackage.prices );
+---
+<article class="card package-card">
+  <header class="package-card__header">
+    <h3 class="package-card__name">{ servicePackage.name }</h3>
+    <p class="package-card__pricing">
+      <span class="package-card__price">
+        { formatPrice( servicePackage.prices ) }
+        { servicePackage.durationMinutes && (
+          <span class="package-card__duration"> · { formatDuration( servicePackage.durationMinutes ) }</span>
+        ) }
+      </span>
+      { priceLabels && <span class="package-card__price-labels">{ priceLabels }</span> }
+    </p>
+  </header>
+  <p class="package-card__benefit">{ servicePackage.benefit }</p>
+  <div class="package-card__description">
+    <PortableText value={ servicePackage.description } />
+  </div>
+</article>
+
+<style>
+  .package-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+  }
+  .package-card__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .package-card__name {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+  .package-card__pricing {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+  .package-card__price {
+    font-weight: 650;
+    white-space: nowrap;
+  }
+  .package-card__duration {
+    color: var(--color-bark);
+    font-weight: 400;
+  }
+  .package-card__price-labels {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-bark);
+  }
+  .package-card__benefit {
+    margin: var(--space-2) 0 0;
+    color: var(--color-terracotta-deep);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .package-card__description {
+    margin-top: var(--space-2);
+    color: var(--color-bark);
+    font-size: var(--text-sm);
+  }
+  .package-card__description :global( p:first-child ) {
+    margin-top: 0;
+  }
+  .package-card__description :global( p:last-child ) {
+    margin-bottom: 0;
+  }
+</style>
