@@ -1,0 +1,30 @@
+---
+import type { Service } from "../lib/sanity";
+import ServiceRow from "./ServiceRow.astro";
+
+interface Props {
+  services: Service[];
+  headingId: string;
+}
+const { services, headingId } = Astro.props;
+const regularServices = services.filter( ( service ) => !service.seasonal );
+const seasonalServices = services.filter( ( service ) => service.seasonal );
+---
+<section class="service-menu" aria-labelledby={ headingId }>
+  <h2 id={ headingId } class="service-menu__heading">Menu &amp; Prices</h2>
+  { regularServices.map( ( service ) => <ServiceRow service={ service } /> ) }
+  { seasonalServices.length > 0 && (
+    <>
+      <h3 class="service-menu__seasonal-heading">Seasonal</h3>
+      { seasonalServices.map( ( service ) => <ServiceRow service={ service } /> ) }
+    </>
+  ) }
+</section>
+<style>
+  .service-menu { margin-block: var(--space-5); }
+  .service-menu__heading { margin-bottom: var(--space-3); }
+  .service-menu__seasonal-heading {
+    margin: var(--space-5) 0 var(--space-2);
+    color: var(--color-terracotta-deep);
+  }
+</style>

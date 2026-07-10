@@ -1,0 +1,48 @@
+---
+import type { Faq } from "../lib/sanity";
+import PortableText from "./PortableText.astro";
+
+interface Props {
+  faq: Faq;
+}
+const { faq } = Astro.props;
+---
+<details class="faq-item card">
+  <summary class="faq-question">
+    <span>{ faq.question }</span>
+    <span class="faq-indicator" aria-hidden="true"></span>
+  </summary>
+  <div class="faq-answer">
+    <PortableText value={ faq.answer } />
+  </div>
+</details>
+
+<style>
+  .faq-item {
+    padding: var(--space-3) var(--space-4);
+  }
+  .faq-question {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 550;
+    line-height: 1.3;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-indicator {
+    display: inline-block;
+    flex-shrink: 0;
+    color: var(--color-sage-deep);
+    transition: transform 150ms ease;
+  }
+  .faq-indicator::before { content: "+"; }
+  .faq-item[open] .faq-indicator { transform: rotate(45deg); }
+  .faq-answer { padding-block: var(--space-2) var(--space-1); }
+  .faq-answer :global(p) { color: var(--color-bark); }
+  .faq-answer :global(p:last-child) { margin-bottom: 0; }
+</style>

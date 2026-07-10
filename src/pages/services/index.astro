@@ -1,0 +1,110 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { urlFor } from "../../lib/image";
+import { getServiceCategories, getSiteSettings } from "../../lib/sanity";
+import type { PortableText } from "../../lib/sanity";
+
+const settings = await getSiteSettings();
+const categories = ( await getServiceCategories() ).filter( ( category ) => !category.isAddOnCategory );
+
+const EXCERPT_MAX_LENGTH = 160;
+
+function excerptFromPortableText( blocks: PortableText ): string {
+  for( const block of blocks ) {
+    if( block._type !== "block" ) continue;
+    const children = block.children;
+    if( !Array.isArray( children ) ) continue;
+    const text = children
+      .map( ( child ) => {
+        if( typeof child === "object" && child !== null && "text" in child && typeof child.text === "string" ) {
+          return child.text;
+        }
+        return "";
+      } )
+      .join( "" )
+      .trim();
+    if( !text ) continue;
+    if( text.length <= EXCERPT_MAX_LENGTH ) return text;
+    const truncated = text.slice( 0, EXCERPT_MAX_LENGTH );
+    return `${truncated.slice( 0, truncated.lastIndexOf( " " ) )}…`;
+  }
+  return "";
+}
+
+const pageTitle = `Spa Services & Prices in Seattle | ${settings.siteTitle}`;
+const categoryTitles = categories.map( ( category ) => category.title ).join( ", " );
+const pageDescription = `Browse full menus and prices for ${categoryTitles} at ${settings.siteTitle} in ${settings.address.city}. By appointment only.`;
+---
+<Layout title={ pageTitle } description={ pageDescription } settings={ settings }>
+  <div class="container section">
+    <header class="services-header">
+      <p class="eyebrow">Our Menu</p>
+      <h1>Services</h1>
+      <p class="services-header__intro">
+        Every visit is by appointment only, so your treatment is never rushed.
+        Pick a category below to see the full menu and prices.
+      </p>
+    </header>
+
+    <div class="category-grid">
+      { categories.map( ( category ) => (
+        <article class="card category-card">
+          { category.heroImage && (
+            <img
+              src={ urlFor( category.heroImage ).width( 800 ).height( 500 ).fit( "crop" ).auto( "format" ).url() }
+              alt={ category.heroImage.alt }
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
+            />
+          ) }
+          <div class="category-card__body">
+            <h2 class="category-card__title">{ category.title }</h2>
+            <p class="category-card__excerpt">{ excerptFromPortableText( category.intro ) }</p>
+            <a class="category-card__link" href={ `/services/${category.slug.current}/` }>
+              View menu &amp; prices<span class="visually-hidden"> — { category.title }</span>
+            </a>
+          </div>
+        </article>
+      ) ) }
+    </div>
+
+    <aside class="card packages-card">
+      <div>
+        <h2 class="packages-card__title">Packages, Deals &amp; Add-Ons</h2>
+        <p class="packages-card__text">Bundle services and save, or enhance any appointment with an add-on.</p>
+      </div>
+      <a class="button button--outline" href="/packages/">View packages &amp; deals</a>
+    </aside>
+  </div>
+</Layout>
+<style>
+  .services-header { max-width: 42rem; margin-bottom: var(--space-5); }
+  .services-header__intro { color: var(--color-bark); }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax( min( 18rem, 100% ), 1fr ) );
+    gap: var(--space-4);
+  }
+  .category-card { position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .category-card__body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); }
+  .category-card__title { margin: 0; }
+  .category-card__excerpt { margin: 0; color: var(--color-bark); font-size: var(--text-sm); flex: 1; }
+  .category-card__link { font-weight: 600; text-decoration: none; }
+  .category-card__link:hover { text-decoration: underline; }
+  .category-card__link::after { content: ""; position: absolute; inset: 0; }
+
+  .packages-card {
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .packages-card__title { margin: 0; font-size: var(--text-lg); }
+  .packages-card__text { margin: var(--space-1) 0 0; color: var(--color-bark); font-size: var(--text-sm); }
+</style>

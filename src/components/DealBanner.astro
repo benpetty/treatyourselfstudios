@@ -1,0 +1,61 @@
+---
+import type { Deal } from "../lib/sanity";
+
+interface Props {
+  deals: Deal[];
+}
+const { deals } = Astro.props;
+---
+<aside class="deal-banner" aria-label="Current deals">
+  <div class="container deal-banner-inner">
+    <p class="eyebrow">Current Deals</p>
+    <ul class="deal-list">
+      { deals.map( ( deal ) => (
+        <li class="deal-item">
+          <strong>{ deal.title }</strong>
+          <span>{ deal.details }</span>
+        </li>
+      ) ) }
+    </ul>
+    <a class="deal-link" href="/packages/#deals">See all packages &amp; deals <span aria-hidden="true">&rarr;</span></a>
+  </div>
+</aside>
+
+<style>
+  .deal-banner {
+    background: var(--color-blush);
+    padding-block: var(--space-5);
+  }
+  .deal-banner-inner {
+    display: grid;
+    gap: var(--space-3);
+    text-align: center;
+  }
+  .deal-banner-inner .eyebrow {
+    margin: 0;
+  }
+  .deal-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .deal-item {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .deal-item strong {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+  }
+  .deal-item span {
+    font-size: var(--text-sm);
+    color: var(--color-bark);
+  }
+  .deal-link {
+    justify-self: center;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  bookingUrl: string;
+}
+const { bookingUrl } = Astro.props;
+---
+<div class="book-now-cta">
+  <a class="button book-now-cta__button" href={ bookingUrl } rel="noopener">Book Now</a>
+</div>
+<style>
+  .book-now-cta { margin-top: var(--space-5); text-align: center; }
+  @media (max-width: 640px) {
+    .book-now-cta {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 10;
+      margin: 0;
+      padding: var(--space-2) var(--space-4) calc( var(--space-2) + env( safe-area-inset-bottom ) );
+      background: var(--color-ivory);
+      border-top: 1px solid var(--color-line);
+    }
+    .book-now-cta__button { display: block; width: 100%; }
+  }
+</style>

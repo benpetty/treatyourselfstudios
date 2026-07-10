@@ -1,0 +1,55 @@
+---
+import { formatDuration, formatPrice, formatPriceLabels } from "../lib/format";
+import type { Service } from "../lib/sanity";
+import PortableText from "./PortableText.astro";
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+const hasDetail = Boolean( service.description?.length || service.priceNote );
+const priceLabels = formatPriceLabels( service.prices );
+---
+<div class:list={ [ "service-row", { "service-row--featured": service.featured } ] }>
+  <div class="service-row__header">
+    <h3 class="service-row__name">
+      { service.name }
+      { service.featured && <span class="service-row__badge">Client favorite</span> }
+    </h3>
+    <span class="service-row__dots" aria-hidden="true"></span>
+    <span class="service-row__price">
+      { formatPrice( service.prices ) }
+      { service.durationMinutes && <span class="service-row__duration"> · { formatDuration( service.durationMinutes ) }</span> }
+      { priceLabels && <span class="service-row__price-labels">{ priceLabels }</span> }
+    </span>
+  </div>
+  <p class="service-row__benefit">{ service.benefit }</p>
+  { hasDetail && (
+    <details class="service-row__detail">
+      <summary>Details</summary>
+      { service.description && <PortableText value={ service.description } /> }
+      { service.priceNote && <p class="service-row__note">{ service.priceNote }</p> }
+    </details>
+  ) }
+</div>
+<style>
+  .service-row { padding-block: var(--space-3); border-bottom: 1px solid var(--color-line); }
+  .service-row__header { display: flex; align-items: baseline; gap: var(--space-2); }
+  .service-row__name { font-size: var(--text-lg); margin: 0; }
+  .service-row__badge {
+    font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700;
+    color: var(--color-terracotta-deep); text-transform: uppercase; letter-spacing: 0.08em;
+    margin-left: var(--space-2);
+  }
+  .service-row__dots { flex: 1; border-bottom: 2px dotted var(--color-line); }
+  .service-row__price { font-weight: 650; white-space: nowrap; }
+  .service-row__duration { color: var(--color-bark); font-weight: 400; }
+  .service-row__price-labels {
+    display: block; font-size: var(--text-xs); font-weight: 400;
+    color: var(--color-bark); text-align: right;
+  }
+  .service-row__benefit { margin: var(--space-1) 0 0; color: var(--color-bark); font-size: var(--text-sm); }
+  .service-row__detail { margin-top: var(--space-2); }
+  .service-row__detail summary { cursor: pointer; color: var(--color-sage-deep); font-size: var(--text-sm); }
+  .service-row__note { font-style: italic; font-size: var(--text-sm); }
+</style>

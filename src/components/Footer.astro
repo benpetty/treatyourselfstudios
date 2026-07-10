@@ -1,0 +1,72 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+import { urlFor } from "../lib/image";
+
+interface Props {
+  settings: SiteSettings;
+}
+const { settings } = Astro.props;
+const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : undefined;
+const currentYear = new Date().getFullYear();
+const socialEntries = [
+  { label: "Instagram", url: settings.socialLinks?.instagram },
+  { label: "Facebook", url: settings.socialLinks?.facebook },
+  { label: "Twitter", url: settings.socialLinks?.twitter },
+  { label: "Yelp", url: settings.socialLinks?.yelp },
+].filter( ( entry ): entry is { label: string; url: string } => Boolean( entry.url ) );
+---
+<footer class="footer">
+  <div class="footer-columns container">
+    <div>
+      { logoUrl
+        ? <img src={ logoUrl } alt={ settings.siteTitle } height="48" />
+        : <p class="footer-brand">{ settings.siteTitle }</p> }
+      { settings.tagline && <p class="footer-tagline">{ settings.tagline }</p> }
+      <ul class="footer-social">
+        { socialEntries.map( ( entry ) => (
+          <li><a href={ entry.url } rel="noopener">{ entry.label }</a></li>
+        ) ) }
+      </ul>
+    </div>
+    <address class="footer-nap">
+      <p class="footer-heading">{ settings.siteTitle }</p>
+      <p>{ settings.address.street }<br />{ settings.address.city }, { settings.address.state } { settings.address.zip }</p>
+      <p><a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a></p>
+      <p>{ settings.hoursNote }</p>
+    </address>
+    <nav aria-label="Footer">
+      <p class="footer-heading">Quick Links</p>
+      <ul class="footer-links">
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/packages/">Packages &amp; Deals</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href={ settings.giftCardUrl } rel="noopener">Gift Cards</a></li>
+        { settings.shopUrl && <li><a href={ settings.shopUrl } rel="noopener">Shop</a></li> }
+        <li><a href="/terms/">Terms &amp; Conditions</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copyright container">© 2017–{ currentYear } Treat YourSelf Studios</p>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--space-7); padding-block: var(--space-6) var(--space-4);
+    background: var(--color-blush); color: var(--color-espresso);
+  }
+  .footer-columns {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-5); align-items: start;
+  }
+  .footer-brand { margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; }
+  .footer-tagline { margin-block: var(--space-2); font-style: italic; }
+  .footer-heading { margin-top: 0; font-weight: 700; }
+  .footer-nap { font-style: normal; }
+  .footer-nap p { margin-block: var(--space-1); }
+  .footer-social, .footer-links { list-style: none; margin: 0; padding: 0; }
+  .footer-social { display: flex; gap: var(--space-3); }
+  .footer-links li { padding-block: var(--space-1); }
+  .footer-copyright { margin-block: var(--space-5) 0; font-size: var(--text-sm); color: var(--color-bark); }
+</style>

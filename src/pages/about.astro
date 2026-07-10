@@ -1,0 +1,85 @@
+---
+import Layout from "../layouts/Layout.astro";
+import JsonLd from "../components/JsonLd.astro";
+import TeamMemberCard from "../components/TeamMemberCard.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { getSiteSettings, getTeamMembers, getTestimonials } from "../lib/sanity";
+
+const settings = await getSiteSettings();
+const teamMembers = await getTeamMembers();
+const testimonials = await getTestimonials();
+
+const pageTitle = "About Us — Meet the Team | Treat YourSelf Studios";
+const pageDescription =
+  "Meet the estheticians behind Treat YourSelf Studios, an appointment-only spa in Seattle offering one-on-one facials, waxing, and body treatments.";
+
+const reviewsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "DaySpa",
+  name: settings.siteTitle,
+  review: testimonials.map( ( testimonial ) => ( {
+    "@type": "Review",
+    reviewBody: testimonial.quote,
+    author: { "@type": "Person", name: testimonial.attribution },
+  } ) ),
+};
+---
+<Layout title={ pageTitle } description={ pageDescription } settings={ settings }>
+  <JsonLd data={ reviewsJsonLd } />
+
+  <section class="section container about-intro">
+    <p class="eyebrow">Our Studio</p>
+    <h1>Meet Your Estheticians</h1>
+    <div class="about-story">
+      <p>
+        The best journey in life is the journey back to yourself. Treat YourSelf Studios was built
+        around that idea — a calm Seattle studio where you can set aside the stresses of a busy day
+        and spend an hour focused entirely on you, with a full range of professional facial, waxing,
+        and body treatments.
+      </p>
+      <p>
+        We see every client by appointment only, one at a time. That means no crowded waiting room
+        and no rushed services — just unhurried, one-on-one care from an esthetician whose full
+        attention is on you from the moment you walk in the door.
+      </p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2 class="visually-hidden">Our Team</h2>
+    <ul class="team-list">
+      { teamMembers.map( ( member ) => (
+        <li><TeamMemberCard member={ member } /></li>
+      ) ) }
+    </ul>
+  </section>
+
+  <section class="section container">
+    <p class="eyebrow">Kind Words</p>
+    <h2>What Our Clients Say</h2>
+    <ul class="testimonial-grid">
+      { testimonials.map( ( testimonial ) => (
+        <li><TestimonialCard testimonial={ testimonial } /></li>
+      ) ) }
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .about-intro { padding-bottom: 0; }
+  .about-story { max-width: 44rem; }
+  .about-story p { color: var(--color-bark); }
+  .team-list,
+  .testimonial-grid {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .team-list { margin-top: 0; }
+  .testimonial-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    align-items: stretch;
+  }
+</style>

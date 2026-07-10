@@ -1,0 +1,56 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+
+interface Props {
+  address: SiteSettings["address"];
+}
+const { address } = Astro.props;
+
+const addressQuery = `Treat YourSelf Studios, ${address.street}, ${address.city}, ${address.state} ${address.zip}`;
+const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent( addressQuery )}`;
+---
+<div class="card location-map">
+  <img
+    class="location-map__photo"
+    src="/images/studio-exterior.jpg"
+    alt="Exterior of the Columbia City Abbey, the brick building that is home to Treat YourSelf Studios"
+    width="1284"
+    height="897"
+    loading="lazy"
+  />
+  <div class="location-map__body">
+    <h2>Find the studio</h2>
+    <address class="location-map__address">
+      { address.street }<br />
+      { address.city }, { address.state } { address.zip }
+    </address>
+    <p class="location-map__note">Look for the Columbia City Abbey — the building pictured above.</p>
+    <a class="button button--outline" href={ directionsUrl } rel="noopener">Get Directions</a>
+  </div>
+</div>
+
+<style>
+  .location-map {
+    overflow: hidden;
+  }
+  .location-map__photo {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  .location-map__body {
+    padding: var(--space-4);
+  }
+  .location-map__body h2 {
+    margin-block: 0 var(--space-2);
+  }
+  .location-map__address {
+    font-style: normal;
+    margin-block-end: var(--space-2);
+  }
+  .location-map__note {
+    font-size: var(--text-sm);
+    color: var(--color-bark);
+    margin-block: 0 var(--space-3);
+  }
+</style>

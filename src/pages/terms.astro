@@ -1,0 +1,71 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteSettings } from "../lib/sanity";
+
+const settings = await getSiteSettings();
+
+const pageTitle = "Terms & Conditions | Treat YourSelf Studios";
+const pageDescription =
+  "Our appointment policies at Treat YourSelf Studios: cancellations and changes, no-shows, cards on file, and retail returns.";
+---
+<Layout title={ pageTitle } description={ pageDescription } settings={ settings }>
+  <section class="section">
+    <div class="container terms">
+      <p class="eyebrow">The fine print, warmly</p>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="terms__intro">
+        Your appointment time is reserved just for you. These policies keep the schedule fair for
+        every guest — and for your esthetician. If anything here is unclear, just ask.
+      </p>
+
+      <h2>Cancellations &amp; Changes</h2>
+      <p>
+        Life happens — we get it. If you need to change or cancel your appointment, please let us
+        know at least 24 hours ahead. Changes or cancellations made without that notice are charged
+        50% of the appointment price. Need to reschedule? Call or text us at
+        <a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a>.
+      </p>
+
+      <h2>No-Shows</h2>
+      <p>
+        If you miss your appointment without letting us know, 100% of the appointment price will be
+        charged. Arriving more than 15 minutes after your start time (10 minutes for shorter
+        services) counts as a no-show, and we won't be able to see you that day — your treatment
+        deserves its full time, and so does the next guest's.
+      </p>
+
+      <h2>Card on File</h2>
+      <p>
+        When you book, you'll be asked for a credit card number to hold your reservation. Your card
+        information stays private — it's only used to secure your booking and to cover the fees
+        above if they ever apply.
+      </p>
+
+      <h2>Retail Returns</h2>
+      <p>
+        All retail returns are for store credit only. If a product isn't working for you, bring it
+        back and we'll help you find one that does.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .terms {
+    max-width: 44rem;
+  }
+  .terms h1 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+  .terms__intro {
+    color: var(--color-bark);
+    font-size: var(--text-lg);
+    margin-block-end: var(--space-5);
+  }
+  .terms h2 {
+    margin-block: var(--space-5) var(--space-2);
+  }
+  .terms p {
+    margin-block: 0;
+  }
+</style>

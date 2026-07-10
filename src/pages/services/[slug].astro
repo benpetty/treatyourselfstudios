@@ -1,0 +1,77 @@
+---
+import BookNowCta from "../../components/BookNowCta.astro";
+import CareAccordion from "../../components/CareAccordion.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import PortableText from "../../components/PortableText.astro";
+import ServiceMenu from "../../components/ServiceMenu.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getServiceCategories, getServicesByCategory, getSiteSettings } from "../../lib/sanity";
+import type { Service, ServiceCategory } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const categories = await getServiceCategories();
+  return categories
+    .filter( ( category ) => !category.isAddOnCategory )
+    .map( ( category ) => ( { params: { slug: category.slug.current }, props: { category } } ) );
+}
+
+interface Props {
+  category: ServiceCategory;
+}
+const { category } = Astro.props;
+const settings = await getSiteSettings();
+const services: Service[] = await getServicesByCategory( category.slug.current );
+
+if( !services.length ) {
+  throw new Error( `No services found for category "${category.title}" — seed data incomplete or reference broken.` );
+}
+
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: services.map( ( service, index ) => ( {
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Service",
+      name: service.name,
+      description: service.benefit,
+      provider: { "@type": "DaySpa", name: settings.siteTitle },
+      offers: service.prices.map( ( price ) => ( {
+        "@type": "Offer",
+        price: price.amount,
+        priceCurrency: "USD",
+        ...( price.label ? { name: price.label } : {} ),
+      } ) ),
+    },
+  } ) ),
+};
+---
+<Layout title={ category.seoTitle } description={ category.seoDescription } settings={ settings }>
+  <article class="container section category-page">
+    <header class="category-page__header">
+      <p class="eyebrow">Services</p>
+      <h1>{ category.title }</h1>
+      <PortableText value={ category.intro } />
+    </header>
+
+    { category.educationBlocks?.map( ( block ) => (
+      <CareAccordion label={ block.heading } content={ block.body } />
+    ) ) }
+
+    <ServiceMenu services={ services } headingId={ `menu-${category.slug.current}` } />
+
+    { category.preCare && <CareAccordion label="Before your appointment" content={ category.preCare } /> }
+    { category.postCare && <CareAccordion label="Aftercare & maintenance" content={ category.postCare } /> }
+
+    <BookNowCta bookingUrl={ settings.bookingUrl } />
+  </article>
+  <JsonLd data={ servicesJsonLd } />
+</Layout>
+<style>
+  .category-page__header { max-width: 42rem; margin-bottom: var(--space-5); }
+  @media (max-width: 640px) {
+    /* Keep the fixed Book Now bar from covering the last accordion/footer link. */
+    .category-page { padding-bottom: var(--space-7); }
+  }
+</style>

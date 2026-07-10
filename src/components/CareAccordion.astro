@@ -1,0 +1,27 @@
+---
+import type { PortableText as PortableTextValue } from "../lib/sanity";
+import PortableText from "./PortableText.astro";
+
+interface Props {
+  label: string;
+  content: PortableTextValue;
+}
+const { label, content } = Astro.props;
+---
+<details class="care-accordion card">
+  <summary class="care-accordion__summary">{ label }</summary>
+  <div class="care-accordion__body">
+    <PortableText value={ content } />
+  </div>
+</details>
+<style>
+  .care-accordion { margin-block: var(--space-3); padding: var(--space-3) var(--space-4); }
+  .care-accordion__summary {
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 550;
+  }
+  .care-accordion__summary:hover { color: var(--color-sage-deep); }
+  .care-accordion__body { padding-top: var(--space-2); color: var(--color-bark); }
+</style>

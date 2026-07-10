@@ -1,0 +1,73 @@
+---
+import ContactForm from "../components/ContactForm.astro";
+import LocationMap from "../components/LocationMap.astro";
+import Layout from "../layouts/Layout.astro";
+import { getSiteSettings } from "../lib/sanity";
+
+const settings = await getSiteSettings();
+
+const pageTitle = "Contact & Location | Treat YourSelf Studios";
+const pageDescription =
+  "Send us a message, call or text, or find your way to Treat YourSelf Studios in Seattle's Columbia City neighborhood. Appointments are booked online any time.";
+---
+<Layout title={ pageTitle } description={ pageDescription } settings={ settings }>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Get in touch</p>
+      <h1>Contact &amp; Location</h1>
+      <div class="contact-grid">
+        <div class="contact-grid__column">
+          <ContactForm phone={ settings.phone } phoneE164={ settings.phoneE164 } bookingUrl={ settings.bookingUrl } />
+          <p class="contact-note">
+            Prefer to talk? Call or text <a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a>.
+            { settings.email && (
+              <Fragment> Or email us at <a href={ `mailto:${settings.email}` }>{ settings.email }</a>.</Fragment>
+            ) }
+          </p>
+        </div>
+        <div class="contact-grid__column">
+          <LocationMap address={ settings.address } />
+          <div class="card hours-card">
+            <h2>Hours</h2>
+            <p>{ settings.hoursNote }</p>
+            <a class="button" href={ settings.bookingUrl } rel="noopener">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  h1 {
+    margin-block: var(--space-2) var(--space-5);
+  }
+  .contact-grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  @media (min-width: 48rem) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .contact-grid__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .contact-note {
+    margin: 0;
+    color: var(--color-bark);
+  }
+  .hours-card {
+    padding: var(--space-4);
+  }
+  .hours-card h2 {
+    margin-block: 0 var(--space-2);
+  }
+  .hours-card p {
+    margin-block: 0 var(--space-3);
+  }
+</style>

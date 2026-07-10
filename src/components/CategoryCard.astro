@@ -1,0 +1,78 @@
+---
+import type { ServiceCategory } from "../lib/sanity";
+import { urlFor } from "../lib/image";
+
+interface Props {
+  category: ServiceCategory;
+}
+const { category } = Astro.props;
+
+const CARD_IMAGE_WIDTH = 640;
+const CARD_IMAGE_HEIGHT = 420;
+const imageUrl = category.heroImage
+  ? urlFor( category.heroImage ).width( CARD_IMAGE_WIDTH ).height( CARD_IMAGE_HEIGHT ).fit( "crop" ).auto( "format" ).url()
+  : undefined;
+---
+<a class="card category-card" href={ `/services/${category.slug.current}/` }>
+  { category.heroImage && imageUrl && (
+    <img
+      src={ imageUrl }
+      alt={ category.heroImage.alt }
+      width={ CARD_IMAGE_WIDTH }
+      height={ CARD_IMAGE_HEIGHT }
+      loading="lazy"
+    />
+  ) }
+  <div class="category-card-body">
+    <h3>{ category.title }</h3>
+    <p class="category-card-teaser">{ category.seoDescription }</p>
+    <span class="category-card-cta">Explore <span aria-hidden="true">&rarr;</span></span>
+  </div>
+</a>
+
+<style>
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-espresso);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+  .category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgb(59 47 42 / 0.12);
+    color: var(--color-espresso);
+  }
+  .category-card img {
+    width: 100%;
+    aspect-ratio: 640 / 420;
+    object-fit: cover;
+  }
+  .category-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+  .category-card-body h3 {
+    margin: 0;
+  }
+  .category-card-teaser {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-bark);
+  }
+  .category-card-cta {
+    margin-top: auto;
+    font-weight: 600;
+    color: var(--color-sage-deep);
+  }
+  .category-card:hover .category-card-cta {
+    color: var(--color-espresso);
+  }
+</style>
