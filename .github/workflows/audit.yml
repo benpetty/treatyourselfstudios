@@ -60,7 +60,7 @@ jobs:
         with:
           name: dist
           path: dist/
-      - uses: lycheeverse/lychee-action@v2
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
         with:
           args: --root-dir "${{ github.workspace }}/dist" --accept 200,202,301,302,403,429 --no-progress --max-concurrency 8 'dist/**/*.html'
           fail: true
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "22.13"
-      - uses: treosh/lighthouse-ci-action@v12
+      - uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           configPath: ./lighthouserc.json
           uploadArtifacts: true
