@@ -71,7 +71,9 @@ const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : und
   .brand { text-decoration: none; }
   .brand-mark { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-espresso); }
   .menu { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: var(--space-4); }
-  .menu ul { display: flex; align-items: center; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+  /* Class-targeted, not `.menu ul`: the dropdown is also a ul, and an element
+     selector's extra specificity would override its at-rest `display: none`. */
+  .menu-links, .menu-utility { display: flex; align-items: center; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
   .menu a:not(.button) { text-decoration: none; color: var(--color-espresso); }
   .menu a:not(.button):hover { color: var(--color-sage-deep); }
   .has-dropdown { position: relative; }
@@ -99,7 +101,7 @@ const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : und
       position: absolute; top: 100%; left: 0; right: 0; padding: var(--space-3) var(--space-4);
       background: var(--color-cream); border-bottom: 1px solid var(--color-line);
     }
-    .menu ul { flex-direction: column; align-items: stretch; }
+    .menu-links, .menu-utility { flex-direction: column; align-items: stretch; }
     .menu a { padding-block: var(--space-1); }
     .dropdown { position: static; display: flex; border: none; box-shadow: none; background: none; padding-left: var(--space-3); }
   }
