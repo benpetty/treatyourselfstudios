@@ -1,0 +1,49 @@
+---
+import type { Testimonial } from "../lib/sanity";
+
+interface Props {
+  testimonial: Testimonial;
+}
+const { testimonial } = Astro.props;
+---
+<figure class="card testimonial-card">
+  <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+  <blockquote class="testimonial-quote">{ testimonial.quote }</blockquote>
+  <figcaption class="testimonial-attribution">
+    { testimonial.attribution }
+    { testimonial.location && <span class="testimonial-location"> &middot; { testimonial.location }</span> }
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--space-5) var(--space-4) var(--space-4);
+  }
+  .testimonial-mark {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-terracotta);
+    opacity: 0.4;
+  }
+  .testimonial-quote {
+    flex: 1;
+    margin: 0 0 var(--space-3);
+    font-style: italic;
+  }
+  .testimonial-attribution {
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+  .testimonial-location {
+    font-weight: 400;
+    color: var(--color-bark);
+  }
+</style>

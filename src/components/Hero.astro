@@ -1,0 +1,110 @@
+---
+import type { HomePage } from "../lib/sanity";
+import { urlFor } from "../lib/image";
+
+interface Props {
+  homePage: HomePage;
+  bookingUrl: string;
+}
+const { homePage, bookingUrl } = Astro.props;
+
+const HERO_WIDTH = 1600;
+const HERO_HEIGHT = 900;
+const heroSrcsetWidths = [ 800, 1200, 1600 ];
+
+function heroImageUrl( width: number ): string {
+  if( !homePage.heroImage ) throw new Error( "heroImageUrl called without a hero image" );
+  const height = Math.round( ( width * HERO_HEIGHT ) / HERO_WIDTH );
+  return urlFor( homePage.heroImage ).width( width ).height( height ).fit( "crop" ).auto( "format" ).url();
+}
+
+const heroSrc = homePage.heroImage ? heroImageUrl( HERO_WIDTH ) : undefined;
+const heroSrcset = homePage.heroImage
+  ? heroSrcsetWidths.map( ( width ) => `${heroImageUrl( width )} ${width}w` ).join( ", " )
+  : undefined;
+---
+<section class="hero">
+  { homePage.heroImage && heroSrc && (
+    <img
+      class="hero-image"
+      src={ heroSrc }
+      srcset={ heroSrcset }
+      sizes="100vw"
+      alt={ homePage.heroImage.alt }
+      width={ HERO_WIDTH }
+      height={ HERO_HEIGHT }
+      fetchpriority="high"
+    />
+  ) }
+  <div class="hero-overlay">
+    <div class="container hero-content">
+      <h1>{ homePage.heroHeading }</h1>
+      <p class="hero-subheading">{ homePage.heroSubheading }</p>
+      <div class="hero-actions">
+        <a class="button" href={ bookingUrl } rel="noopener">Book Now</a>
+        <a class="button button--outline" href="/services/">View Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: clamp(24rem, 60vh, 38rem);
+    background: var(--color-blush);
+    overflow: hidden;
+  }
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: relative;
+    display: grid;
+    align-content: center;
+    width: 100%;
+    background: linear-gradient(rgb(59 47 42 / 0.55), rgb(59 47 42 / 0.35));
+  }
+  .hero:not(:has(.hero-image)) .hero-overlay {
+    background: none;
+  }
+  .hero-content {
+    width: 100%;
+    padding-block: var(--space-6);
+    text-align: center;
+  }
+  .hero-content h1 {
+    margin: 0;
+    font-size: var(--text-hero);
+    color: var(--color-ivory);
+  }
+  .hero:not(:has(.hero-image)) .hero-content h1,
+  .hero:not(:has(.hero-image)) .hero-subheading {
+    color: var(--color-espresso);
+  }
+  .hero-subheading {
+    max-width: 38rem;
+    margin: var(--space-3) auto var(--space-5);
+    font-size: var(--text-lg);
+    color: var(--color-ivory);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+  .hero:has(.hero-image) .hero-actions .button--outline {
+    color: var(--color-ivory);
+    box-shadow: inset 0 0 0 2px var(--color-ivory);
+  }
+  .hero:has(.hero-image) .hero-actions .button--outline:hover {
+    background: var(--color-ivory);
+    color: var(--color-espresso);
+  }
+</style>

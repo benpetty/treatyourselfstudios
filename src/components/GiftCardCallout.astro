@@ -1,0 +1,56 @@
+---
+interface Props {
+  giftCardUrl: string;
+}
+const { giftCardUrl } = Astro.props;
+---
+<div class="card gift-callout">
+  <img
+    class="gift-callout-image"
+    src="/images/gift-cards.jpg"
+    alt="A Treat YourSelf Studios gift card in its gift box"
+    width="1920"
+    height="2560"
+    loading="lazy"
+  />
+  <div class="gift-callout-body">
+    <p class="eyebrow">Gift Cards</p>
+    <h2>Give the gift of self-care</h2>
+    <p>
+      Treat someone you love to a little time for themselves. Gift cards are available in any
+      amount and can be used toward any of our services.
+    </p>
+    <a class="button" href={ giftCardUrl } rel="noopener">Buy a Gift Card</a>
+  </div>
+</div>
+
+<style>
+  .gift-callout {
+    display: grid;
+    overflow: hidden;
+  }
+  .gift-callout-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gift-callout-body {
+    display: grid;
+    justify-items: start;
+    align-content: center;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .gift-callout-body h2,
+  .gift-callout-body p {
+    margin: 0;
+  }
+  @media (min-width: 48rem) {
+    .gift-callout {
+      grid-template-columns: 2fr 3fr;
+    }
+    .gift-callout-image {
+      max-height: 26rem;
+    }
+  }
+</style>

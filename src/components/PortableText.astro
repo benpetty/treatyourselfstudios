@@ -1,0 +1,10 @@
+---
+import { PortableText as PortableTextRenderer } from "astro-portabletext";
+import type { PortableText as PortableTextValue } from "../lib/sanity";
+
+interface Props {
+  value: PortableTextValue;
+}
+const { value } = Astro.props;
+---
+<PortableTextRenderer value={ value } />

@@ -1,0 +1,49 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+
+interface Props {
+  settings: SiteSettings;
+}
+const { settings } = Astro.props;
+
+const { street, city, state, zip } = settings.address;
+const directionsQuery = encodeURIComponent( `${street} ${city} ${state} ${zip}` );
+const directionsUrl = `https://maps.google.com/?q=${directionsQuery}`;
+---
+<section class="section hours-location" aria-labelledby="hours-location-heading">
+  <div class="container hours-location-inner">
+    <p class="eyebrow">Hours &amp; Location</p>
+    <h2 id="hours-location-heading">Visit the Studio</h2>
+    <address class="hours-location-address">
+      <p>
+        { street }<br />
+        { city }, { state } { zip }
+      </p>
+      <p class="hours-location-note">{ settings.hoursNote }</p>
+      <p><a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a></p>
+    </address>
+    <a class="button button--outline" href={ directionsUrl } rel="noopener">Get Directions</a>
+  </div>
+</section>
+
+<style>
+  .hours-location-inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-3);
+    text-align: center;
+  }
+  .hours-location-inner .eyebrow,
+  .hours-location-inner h2 {
+    margin: 0;
+  }
+  .hours-location-address {
+    font-style: normal;
+  }
+  .hours-location-address p {
+    margin-block: var(--space-1);
+  }
+  .hours-location-note {
+    color: var(--color-bark);
+  }
+</style>
