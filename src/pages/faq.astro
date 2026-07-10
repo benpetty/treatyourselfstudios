@@ -1,0 +1,67 @@
+---
+import { toPlainText } from "astro-portabletext";
+import Layout from "../layouts/Layout.astro";
+import JsonLd from "../components/JsonLd.astro";
+import FaqItem from "../components/FaqItem.astro";
+import { getSiteSettings, getFaqs } from "../lib/sanity";
+
+const settings = await getSiteSettings();
+const faqs = await getFaqs();
+
+const pageTitle = "FAQ — Policies & What to Expect | Treat YourSelf Studios";
+const pageDescription =
+  "Answers to common questions about Treat YourSelf Studios — booking, cancellations, what to expect at your appointment, and how to prepare for your service.";
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map( ( faq ) => ( {
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: { "@type": "Answer", text: toPlainText( faq.answer ) },
+  } ) ),
+};
+---
+<Layout title={ pageTitle } description={ pageDescription } settings={ settings }>
+  <JsonLd data={ faqJsonLd } />
+
+  <section class="section container">
+    <p class="eyebrow">Good to Know</p>
+    <h1>Frequently Asked Questions</h1>
+    <ul class="faq-list">
+      { faqs.map( ( faq ) => (
+        <li><FaqItem faq={ faq } /></li>
+      ) ) }
+    </ul>
+
+    <aside class="faq-contact card">
+      <h2>Still have a question?</h2>
+      <p>
+        We're happy to help. Send us a note through our
+        <a href="/contact/">contact page</a> or give us a call at
+        <a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a>.
+      </p>
+      <a class="button" href="/contact/">Get in Touch</a>
+    </aside>
+  </section>
+</Layout>
+
+<style>
+  .faq-list {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    max-width: 52rem;
+  }
+  .faq-contact {
+    margin-top: var(--space-6);
+    max-width: 52rem;
+    padding: var(--space-5);
+    text-align: center;
+  }
+  .faq-contact h2 { margin-top: 0; }
+  .faq-contact p { color: var(--color-bark); }
+  .faq-contact .button { margin-top: var(--space-2); }
+</style>
