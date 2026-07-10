@@ -1,0 +1,32 @@
+---
+import { getSiteSettings } from "../lib/sanity";
+import { legacyRedirectTargets } from "../lib/redirects";
+
+export async function getStaticPaths() {
+  const settings = await getSiteSettings();
+  const targets = legacyRedirectTargets( settings );
+  return Object.entries( targets ).map( ( [ legacyPath, target ] ) => ( {
+    params: { legacyPath },
+    props: { target },
+  } ) );
+}
+
+interface Props {
+  target: string;
+}
+const { target } = Astro.props;
+const absoluteTarget = target.startsWith( "http" ) ? target : new URL( target, Astro.site ).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Moved — Treat YourSelf Studios</title>
+    <meta http-equiv="refresh" content={ `0; url=${absoluteTarget}` } />
+    <link rel="canonical" href={ absoluteTarget } />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <p>This page has moved. <a href={ absoluteTarget }>Continue to the new page</a>.</p>
+  </body>
+</html>

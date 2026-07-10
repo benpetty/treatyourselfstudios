@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSiteSettings } from "../lib/sanity";
+
+const settings = await getSiteSettings();
+---
+<Layout title="Page Not Found | Treat YourSelf Studios" description={ settings.siteDescription } settings={ settings }>
+  <section class="section container not-found">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p>That page seems to have wandered off for a little self-care. Let's get you back to something relaxing.</p>
+    <div class="not-found-actions">
+      <a class="button" href={ settings.bookingUrl } rel="noopener">Book Now</a>
+      <a class="button button--outline" href="/services/">Browse Services</a>
+    </div>
+    <p><a href="/">Return to the home page</a></p>
+  </section>
+</Layout>
+
+<style>
+  .not-found { max-width: 38rem; text-align: center; }
+  .not-found-actions {
+    display: flex; justify-content: center; gap: var(--space-3);
+    flex-wrap: wrap; margin-block: var(--space-4);
+  }
+</style>

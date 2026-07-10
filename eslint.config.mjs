@@ -9,6 +9,10 @@ export default typescriptEslint.config(
   ...typescriptEslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
   {
+    files: ["*.mjs"],
+    languageOptions: { globals: { URL: "readonly", console: "readonly", process: "readonly" } }
+  },
+  {
     rules: {
       "space-in-parens": ["error", "always"],
       "id-length": ["error", { "min": 2, "exceptions": ["_"] }],
