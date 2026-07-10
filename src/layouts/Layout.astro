@@ -1,0 +1,27 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import type { SiteSettings } from "../lib/sanity";
+
+interface Props {
+  title: string;
+  description: string;
+  settings: SiteSettings;
+}
+const { title, description, settings } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={ title } description={ description } settings={ settings } />
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Skip to content</a>
+    <Nav settings={ settings } />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer settings={ settings } />
+  </body>
+</html>

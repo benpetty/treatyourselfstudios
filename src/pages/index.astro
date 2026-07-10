@@ -1,7 +1,9 @@
 ---
-import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
+import { getSiteSettings } from "../lib/sanity";
+
+const settings = await getSiteSettings();
 ---
-<html lang="en">
-  <head><meta charset="utf-8" /><title>Treat YourSelf Studios</title></head>
-  <body><h1>Treat YourSelf Studios</h1></body>
-</html>
+<Layout title="Treat YourSelf Studios" description={ settings.siteDescription } settings={ settings }>
+  <section class="section container"><h1>Home page lands in Task 8</h1></section>
+</Layout>

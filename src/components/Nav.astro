@@ -1,0 +1,106 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+import { getServiceCategories } from "../lib/sanity";
+import { urlFor } from "../lib/image";
+
+interface Props {
+  settings: SiteSettings;
+}
+const { settings } = Astro.props;
+const categories = ( await getServiceCategories() ).filter( ( category ) => !category.isAddOnCategory );
+const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : undefined;
+---
+{ settings.firstVisitOffer && <p class="announcement">{ settings.firstVisitOffer }</p> }
+<header class="header">
+  <div class="header-inner container">
+    <a class="brand" href="/">
+      { logoUrl
+        ? <img src={ logoUrl } alt={ settings.siteTitle } height="48" />
+        : <span class="brand-mark">{ settings.siteTitle }</span> }
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
+      <span class="visually-hidden">Menu</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+    <nav id="site-menu" class="menu" data-nav-menu aria-label="Site">
+      <ul class="menu-links">
+        <li class="has-dropdown">
+          <a href="/services/">Services</a>
+          <ul class="dropdown">
+            { categories.map( ( category ) => (
+              <li><a href={ `/services/${category.slug.current}/` }>{ category.menuLabel ?? category.title }</a></li>
+            ) ) }
+            <li><a href="/services/">All Services</a></li>
+          </ul>
+        </li>
+        <li><a href="/packages/">Packages &amp; Deals</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <ul class="menu-utility">
+        <li><a href={ settings.giftCardUrl } rel="noopener">Gift Cards</a></li>
+        { settings.shopUrl && <li><a href={ settings.shopUrl } rel="noopener">Shop</a></li> }
+        <li><a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a></li>
+        <li><a class="button" href={ settings.bookingUrl } rel="noopener">Book Now</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector( "[data-nav-toggle]" );
+  const menu = document.querySelector( "[data-nav-menu]" );
+  toggle?.addEventListener( "click", () => {
+    const isExpanded = toggle.getAttribute( "aria-expanded" ) === "true";
+    toggle.setAttribute( "aria-expanded", String( !isExpanded ) );
+    menu?.classList.toggle( "is-open", !isExpanded );
+  } );
+</script>
+
+<style>
+  .announcement {
+    margin: 0; padding: var(--space-1) var(--space-3); text-align: center;
+    background: var(--color-blush); color: var(--color-espresso); font-size: var(--text-sm);
+  }
+  .header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--color-cream); border-bottom: 1px solid var(--color-line);
+  }
+  .header-inner { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-2); }
+  .brand { text-decoration: none; }
+  .brand-mark { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-espresso); }
+  .menu { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: var(--space-4); }
+  .menu ul { display: flex; align-items: center; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+  .menu a:not(.button) { text-decoration: none; color: var(--color-espresso); }
+  .menu a:not(.button):hover { color: var(--color-sage-deep); }
+  .has-dropdown { position: relative; }
+  .dropdown {
+    position: absolute; top: 100%; left: 0; min-width: 13rem; padding: var(--space-2);
+    background: var(--color-ivory); border: 1px solid var(--color-line);
+    border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+    flex-direction: column; align-items: stretch; display: none;
+  }
+  .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown { display: flex; }
+  .dropdown a { display: block; padding: var(--space-1) var(--space-2); border-radius: 6px; }
+  .dropdown a:hover { background: var(--color-blush); }
+  .nav-toggle { display: none; background: none; border: none; padding: var(--space-2); cursor: pointer; }
+  .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after {
+    display: block; width: 24px; height: 2px; background: var(--color-espresso); content: "";
+  }
+  .nav-toggle-bars { position: relative; }
+  .nav-toggle-bars::before { position: absolute; top: -7px; }
+  .nav-toggle-bars::after { position: absolute; top: 7px; }
+  @media (max-width: 56rem) {
+    .nav-toggle { display: block; margin-left: auto; }
+    .menu { display: none; }
+    .menu.is-open {
+      display: flex; flex-direction: column; align-items: stretch;
+      position: absolute; top: 100%; left: 0; right: 0; padding: var(--space-3) var(--space-4);
+      background: var(--color-cream); border-bottom: 1px solid var(--color-line);
+    }
+    .menu ul { flex-direction: column; align-items: stretch; }
+    .menu a { padding-block: var(--space-1); }
+    .dropdown { position: static; display: flex; border: none; box-shadow: none; background: none; padding-left: var(--space-3); }
+  }
+</style>
