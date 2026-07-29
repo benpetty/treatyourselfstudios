@@ -49,7 +49,7 @@ the repo, so only the processed outputs are committed:
 - `LocationMap.astro` — updated `width`/`height` (1264×948) and corrected alt
   text (current alt says "brick building"; the abbey is white stucco with a
   wood-clad modern addition). No layout change.
-- `GiftCardCallout.astro` — updated `width`/`height` (1536×2048) and new alt
+- `GiftCardCallout.astro` — updated `width`/`height` (1200×1600) and new alt
   text describing the champagne & roses scene. No layout change.
 - `about.astro` — intro section becomes a two-column grid on desktop (story
   text beside `studio-interior.jpg`), stacking on mobile. Uses existing
