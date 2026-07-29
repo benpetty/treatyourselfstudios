@@ -36,6 +36,7 @@ Required environment variables (no fallbacks — the build fails fast if any is 
 | `make studio` | Start the Sanity Studio dev server at localhost:3333 |
 | `make deploy-studio` | Deploy Sanity Studio to `*.sanity.studio` hosting |
 | `make seed` | Seed/refresh Sanity content from `scripts/seed-data/` |
+| `make set-logo LOGO=<file>` | Upload an image and set it as the site logo in Sanity |
 
 ## Editing content
 

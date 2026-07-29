@@ -30,18 +30,28 @@ const reviewsJsonLd = {
   <section class="section container about-intro">
     <p class="eyebrow">Our Studio</p>
     <h1>Meet Your Estheticians</h1>
-    <div class="about-story">
-      <p>
-        The best journey in life is the journey back to yourself. Treat YourSelf Studios was built
-        around that idea — a calm Seattle studio where you can set aside the stresses of a busy day
-        and spend an hour focused entirely on you, with a full range of professional facial, waxing,
-        and body treatments.
-      </p>
-      <p>
-        We see every client by appointment only, one at a time. That means no crowded waiting room
-        and no rushed services — just unhurried, one-on-one care from an esthetician whose full
-        attention is on you from the moment you walk in the door.
-      </p>
+    <div class="about-intro-grid">
+      <div class="about-story">
+        <p>
+          The best journey in life is the journey back to yourself. Treat YourSelf Studios was built
+          around that idea — a calm Seattle studio where you can set aside the stresses of a busy day
+          and spend an hour focused entirely on you, with a full range of professional facial, waxing,
+          and body treatments.
+        </p>
+        <p>
+          We see every client by appointment only, one at a time. That means no crowded waiting room
+          and no rushed services — just unhurried, one-on-one care from an esthetician whose full
+          attention is on you from the moment you walk in the door.
+        </p>
+      </div>
+      <img
+        class="about-intro-photo"
+        src="/images/studio-interior.jpg"
+        alt="Treatment room at Treat YourSelf Studios, with a facial bed, plants, and skincare products on wall shelves"
+        width="1200"
+        height="1600"
+        loading="lazy"
+      />
     </div>
   </section>
 
@@ -67,8 +77,18 @@ const reviewsJsonLd = {
 
 <style>
   .about-intro { padding-bottom: 0; }
+  .about-intro-grid { display: grid; gap: var(--space-4); align-items: start; }
   .about-story { max-width: 44rem; }
   .about-story p { color: var(--color-bark); }
+  .about-intro-photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 48rem) {
+    .about-intro-grid { grid-template-columns: 3fr 2fr; gap: var(--space-5); }
+  }
   .team-list,
   .testimonial-grid {
     list-style: none;
