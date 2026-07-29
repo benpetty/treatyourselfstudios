@@ -1,9 +1,15 @@
 import type { SanityClient } from "@sanity/client";
+import { uploadImage } from "./helpers";
 
-export async function buildSiteSettings( _client: SanityClient ) {
+export async function buildSiteSettings( client: SanityClient ) {
   return {
     _id: "siteSettings",
     _type: "siteSettings",
+    logo: await uploadImage(
+      client,
+      "docs/content-audit/images/treat-yourself-studios-sign-logo.jpg",
+      "Treat YourSelf Studios logo — a green succulent inside a brush-stroke circle",
+    ),
     siteTitle: "Treat YourSelf Studios",
     tagline: "The best journey in life is the journey back to yourself.",
     siteDescription:
