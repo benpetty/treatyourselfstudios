@@ -11,9 +11,13 @@
   --color-terracotta-deep: #9e5c3b; /* terracotta as small text — AA on cream/ivory */
   --color-blush: #f3e5dc;        /* soft section tint */
   --color-line: #e5dcd1;         /* borders, dividers */
+  --color-moss-deep: #2e3529;    /* dark band ground (footer) */
+  --color-cream-muted: #d8cec4;  /* secondary text on dark grounds — AA on moss/espresso */
+  --color-sage-mist: #b9c1ae;    /* line-art strokes / tertiary on dark */
 
   --font-display: "Fraunces Variable", Georgia, serif;
   --font-body: "Inter Variable", system-ui, sans-serif;
+  --font-display-condensed: "Oswald Variable", "Arial Narrow", sans-serif;
 
   /* Type scale (fluid) */
   --text-xs: 0.8rem;
@@ -49,7 +53,13 @@ body {
 }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 550; line-height: 1.15; text-wrap: balance; }
 h1 { font-size: var(--text-2xl); }
-h2 { font-size: var(--text-xl); }
+h2 {
+  font-family: var(--font-display-condensed);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
 h3 { font-size: var(--text-lg); }
 a { color: var(--color-sage-deep); }
 a:hover { color: var(--color-espresso); }
