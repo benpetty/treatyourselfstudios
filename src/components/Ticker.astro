@@ -20,6 +20,7 @@ const tickerItems = [ settings.tagline, settings.firstVisitOffer, settings.hours
 <style>
   .ticker { overflow: hidden; background: var(--color-espresso); color: var(--color-blush); }
   .ticker-track { display: flex; width: max-content; animation: ticker-scroll 30s linear infinite; }
+  .ticker:hover .ticker-track, .ticker:focus-within .ticker-track { animation-play-state: paused; }
   .ticker-run { display: flex; }
   .ticker-item { padding: var(--space-2) 0; font-size: var(--text-sm); white-space: nowrap; }
   .ticker-item::after { content: "·"; margin-inline: var(--space-4); color: var(--color-terracotta); }

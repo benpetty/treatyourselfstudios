@@ -33,7 +33,9 @@ Selected by Benny in the visual companion (all mocked in the real palette):
    pause for `prefers-reduced-motion` and duplicate content with
    `aria-hidden` for the seamless loop.
 7. **Rating-forward testimonial band** — testimonials section leads with an
-   aggregate rating + link to the Google listing.
+   aggregate rating + link to the Google listing. Implementation note: the no-rating fallback header kept the site's existing
+   "Kind Words" / "What Clients Are Saying" copy rather than this spec's
+   earlier "Loved by our clients" wording — deliberate, matches the plan.
 
 ## Feedback folded in
 
