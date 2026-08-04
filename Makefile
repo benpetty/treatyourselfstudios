@@ -3,7 +3,7 @@ export
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install dev build preview check lint format studio deploy-studio seed set-logo
+.PHONY: help install dev build preview check lint format studio deploy-studio seed set-logo set-hero
 
 help: ## Show this help message with all available targets
 	@grep -hE '^[a-zA-Z_-]+:.*?##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
@@ -45,3 +45,6 @@ seed: ## Seed/refresh Sanity content from scripts/seed-data/
 
 set-logo: ## Upload an image and set it as the Sanity site logo (usage: make set-logo LOGO=path/to/file.jpg)
 	yarn tsx scripts/set-logo.ts $(LOGO)
+
+set-hero: ## Upload an image and set it as the homepage hero (usage: make set-hero HERO=path/to/file.jpg ALT="alt text")
+	yarn tsx scripts/set-hero.ts $(HERO) "$(ALT)"
