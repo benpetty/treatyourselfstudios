@@ -15,7 +15,7 @@
 - Descriptive variable names; no single-character identifiers; no TypeScript `as`.
 - ESLint `space-in-parens: always` — write `fn( arg )`, `( rule ) => rule.required()`.
 - Verification cycle per task: `yarn run check && yarn lint`; full `yarn build` where stated. No unit-test suite exists. NEVER run a dev server (hard-blocked).
-- All on-dark text must pass WCAG AA against its ground (`#2e3529` moss, `#3b2f2a` espresso). `#faf6f0` cream and `#d8cec4` cream-muted both pass on both grounds (contrast > 9:1 and > 6:1 respectively).
+- All on-dark text must pass WCAG AA against its ground (`#2e3529` moss, `#3b2f2a` espresso). `#faf6f0` cream and `#d8cec4` cream-muted both pass on both grounds (contrast > 9:1 and > 6:1 respectively). For terracotta-toned text on dark grounds use `--color-terracotta-bright: #d99a77` (~5.2:1 on both; added in Task 3's fix round) — plain `--color-terracotta` fails AA on dark (3.9:1).
 - The reduced-motion kill-switch already exists globally (`global.css` `@media (prefers-reduced-motion: reduce)` sets `animation: none !important`) — do not duplicate it in components.
 - Work from `/Users/benny/dev/treatyourselfstudios/.claude/worktrees/design-moody-accents`. First task runs `yarn install --frozen-lockfile` then `yarn add @fontsource-variable/oswald` (this is the one permitted lockfile change; latest stable, currently 5.x).
 - An env file with Sanity credentials is present in the worktree; never reference `.env` literally in Bash commands (hook-blocked).
@@ -395,8 +395,8 @@ In `src/components/GiftCardCallout.astro` styles: replace the `.gift-callout` ru
   }
   .gift-callout-body h2, .gift-callout-body p { margin: 0; }
   .gift-callout-body p { color: var(--color-cream-muted); }
-  .gift-callout .eyebrow { color: var(--color-terracotta); }
-  .gift-callout .button { background: var(--color-terracotta); color: var(--color-ivory); }
+  .gift-callout .eyebrow { color: var(--color-terracotta-bright); }
+  .gift-callout .button { background: var(--color-terracotta-deep); color: var(--color-ivory); }
   .gift-callout .button:hover { background: var(--color-cream); color: var(--color-espresso); }
   @media (min-width: 48rem) {
     .gift-callout { grid-template-columns: 2fr 3fr; }
