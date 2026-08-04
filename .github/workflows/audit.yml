@@ -23,6 +23,8 @@ jobs:
           SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
           PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.PUBLIC_FORMSPREE_ENDPOINT }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          NOINDEX: ${{ vars.NOINDEX }}
       - uses: actions/upload-artifact@v7
         with:
           name: dist
@@ -69,7 +71,7 @@ jobs:
           args: >-
             --root-dir "${{ github.workspace }}/dist"
             --accept 200,202,301,302,403,429
-            --exclude '^https://treatyourselfstudios\.net'
+            --exclude '^https://(staging\.)?treatyourselfstudios\.net'
             --exclude '^https://formspree\.io'
             --no-progress --max-concurrency 8 'dist/**/*.html'
           fail: true
