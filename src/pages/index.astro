@@ -1,11 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CategoryCard from "../components/CategoryCard.astro";
+import CurveDivider from "../components/CurveDivider.astro";
 import DealBanner from "../components/DealBanner.astro";
 import GiftCardCallout from "../components/GiftCardCallout.astro";
 import Hero from "../components/Hero.astro";
 import HoursLocation from "../components/HoursLocation.astro";
 import PortableText from "../components/PortableText.astro";
+import SucculentTexture from "../components/SucculentTexture.astro";
 import TestimonialCard from "../components/TestimonialCard.astro";
 import Ticker from "../components/Ticker.astro";
 import {
@@ -50,6 +52,15 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
 
   <DealBanner deals={ deals } />
 
+  <CurveDivider fill="var(--color-espresso)" direction="down" />
+  <section class="gift-band" aria-label="Gift cards">
+    <SucculentTexture stroke="var(--color-terracotta)" />
+    <div class="container gift-band-inner">
+      <GiftCardCallout giftCardUrl={ settings.giftCardUrl } />
+    </div>
+  </section>
+  <CurveDivider fill="var(--color-espresso)" direction="up" />
+
   { featuredTestimonials.length > 0 && (
     <section class="section container" aria-labelledby="testimonials-heading">
       <p class="eyebrow">Kind Words</p>
@@ -59,10 +70,6 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
       </div>
     </section>
   ) }
-
-  <section class="section container" aria-label="Gift cards">
-    <GiftCardCallout giftCardUrl={ settings.giftCardUrl } />
-  </section>
 
   <HoursLocation settings={ settings } />
 </Layout>
@@ -94,5 +101,13 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: var(--space-4);
+  }
+  .gift-band {
+    position: relative;
+    background: var(--color-espresso);
+    padding-block: var(--space-5);
+  }
+  .gift-band-inner {
+    position: relative;
   }
 </style>
