@@ -36,6 +36,16 @@ export const siteSettingsType = defineType({
     defineField({ name: 'shopUrl', title: 'Square Online Shop URL', type: 'url', validation: ( rule ) => rule.uri({ scheme: [ 'https' ] }) }),
     defineField({ name: 'firstVisitOffer', title: 'First-Visit Offer Banner', type: 'string', description: 'Shown in the site-wide announcement bar; empty hides the bar' }),
     defineField({
+      name: 'googleRating', title: 'Google Rating', type: 'number',
+      description: 'Aggregate rating shown in the testimonial band; leave empty to hide the number',
+      validation: ( rule ) => rule.min( 0 ).max( 5 ).precision( 1 ),
+    }),
+    defineField({
+      name: 'googleReviewUrl', title: 'Google Reviews URL', type: 'url',
+      description: 'Link to the Google Business reviews',
+      validation: ( rule ) => rule.uri({ scheme: [ 'https' ] }),
+    }),
+    defineField({
       name: 'socialLinks', title: 'Social Links', type: 'object',
       fields: [
         defineField({ name: 'instagram', title: 'Instagram URL', type: 'url', validation: ( rule ) => rule.uri({ scheme: [ 'https' ] }) }),

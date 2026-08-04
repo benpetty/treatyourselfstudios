@@ -4,7 +4,7 @@ interface Props {
 }
 const { giftCardUrl } = Astro.props;
 ---
-<div class="card gift-callout">
+<div class="gift-callout">
   <img
     class="gift-callout-image"
     src="/images/gift-cards.jpg"
@@ -28,11 +28,14 @@ const { giftCardUrl } = Astro.props;
   .gift-callout {
     display: grid;
     overflow: hidden;
+    position: relative;
+    color: var(--color-cream);
   }
   .gift-callout-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: var(--radius-card);
   }
   .gift-callout-body {
     display: grid;
@@ -44,6 +47,20 @@ const { giftCardUrl } = Astro.props;
   .gift-callout-body h2,
   .gift-callout-body p {
     margin: 0;
+  }
+  .gift-callout-body p {
+    color: var(--color-cream-muted);
+  }
+  .gift-callout .eyebrow {
+    color: var(--color-terracotta-bright);
+  }
+  .gift-callout .button {
+    background: var(--color-terracotta-deep);
+    color: var(--color-ivory);
+  }
+  .gift-callout .button:hover {
+    background: var(--color-cream);
+    color: var(--color-espresso);
   }
   @media (min-width: 48rem) {
     .gift-callout {
