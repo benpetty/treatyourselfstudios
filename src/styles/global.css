@@ -9,6 +9,7 @@
   --color-sage-deep: #5a6950;    /* hover / active — AA on cream */
   --color-terracotta: #c47e5a;   /* secondary accent (highlights, deals) */
   --color-terracotta-deep: #9e5c3b; /* terracotta as small text — AA on cream/ivory */
+  --color-terracotta-bright: #d99a77; /* terracotta for text on dark grounds — AA on moss/espresso (~5.2:1) */
   --color-blush: #f3e5dc;        /* soft section tint */
   --color-line: #e5dcd1;         /* borders, dividers */
   --color-moss-deep: #2e3529;    /* dark band ground (footer) */
