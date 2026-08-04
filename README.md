@@ -21,6 +21,9 @@ Required environment variables (no fallbacks — the build fails fast if any is 
 | `SANITY_DATASET` | Dataset name (`production`) |
 | `SANITY_API_TOKEN` | Read token for builds; read+write to run `make seed` |
 | `PUBLIC_FORMSPREE_ENDPOINT` | Contact form POST target ([formspree.io](https://formspree.io)) |
+| `SITE_URL` | Canonical origin baked into links/sitemap/robots. CI reads it from the `SITE_URL` repo variable (staging domain until DNS cutover, then the apex) |
+
+Optional: `NOINDEX=true` (staging builds only) adds a robots `noindex` meta and a Disallow-all `robots.txt` so the staging domain stays out of search indexes.
 
 ## Commands
 
