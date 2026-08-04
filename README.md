@@ -37,6 +37,7 @@ Required environment variables (no fallbacks — the build fails fast if any is 
 | `make deploy-studio` | Deploy Sanity Studio to `*.sanity.studio` hosting |
 | `make seed` | Seed/refresh Sanity content from `scripts/seed-data/` |
 | `make set-logo LOGO=<file>` | Upload an image and set it as the site logo in Sanity |
+| `make set-hero HERO=<file> ALT="…"` | Upload an image and set it as the homepage hero in Sanity |
 
 ## Editing content
 

@@ -8,7 +8,11 @@ export async function buildHomePage( client: SanityClient ) {
     heroHeading: "Take a well-deserved break — treat yourself.",
     heroSubheading:
       "Custom facials, expert waxing, and restorative body treatments in a calm, one-on-one studio in Seattle. By appointment only.",
-    heroImage: await uploadImage( client, "docs/content-audit/images/E998EFC5-BF68-45F2-8B0E-56BC3026C222.png", "Smiling client with a fresh facial masque at Treat YourSelf Studios" ),
+    heroImage: await uploadImage(
+      client,
+      "docs/content-audit/images/columbia-city-abbey-hero.jpg",
+      "Golden-hour view of the Columbia City Abbey — the white former church with a modern wood-clad addition that is home to Treat YourSelf Studios",
+    ),
     welcomeHeading: "The best journey in life is the journey back to yourself",
     welcomeBody: richText( [
       "Step away from the stress of your busy day and focus on you. At Treat YourSelf Studios, every visit is one-on-one: your esthetician's full attention, a full range of professional treatments, and products that are all-natural, cruelty-free, and free of parabens, synthetic dyes, and fragrances.",
