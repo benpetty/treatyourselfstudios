@@ -62,11 +62,25 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
   <CurveDivider fill="var(--color-espresso)" direction="up" />
 
   { featuredTestimonials.length > 0 && (
-    <section class="section container" aria-labelledby="testimonials-heading">
-      <p class="eyebrow">Kind Words</p>
-      <h2 id="testimonials-heading">What Clients Are Saying</h2>
-      <div class="testimonial-row">
-        { featuredTestimonials.map( ( testimonial ) => <TestimonialCard testimonial={ testimonial } /> ) }
+    <section class="testimonial-band" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="rating-header">
+          { settings.googleRating ? (
+            <p class="rating-figure">
+              <span class="rating-number">{ settings.googleRating.toFixed( 1 ) }</span>
+              <span class="rating-stars" aria-hidden="true">★★★★★</span>
+            </p>
+          ) : (
+            <p class="eyebrow">Kind Words</p>
+          ) }
+          <h2 id="testimonials-heading">What Clients Are Saying</h2>
+          { settings.googleReviewUrl && (
+            <a class="rating-link" href={ settings.googleReviewUrl } rel="noopener">Read our reviews on Google</a>
+          ) }
+        </div>
+        <div class="testimonial-row">
+          { featuredTestimonials.map( ( testimonial ) => <TestimonialCard testimonial={ testimonial } /> ) }
+        </div>
       </div>
     </section>
   ) }
@@ -97,6 +111,11 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--space-4);
   }
+  .testimonial-band { background: var(--color-blush); padding-block: var(--space-6); }
+  .rating-header { text-align: center; margin-block-end: var(--space-4); }
+  .rating-figure { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); color: var(--color-espresso); }
+  .rating-stars { color: var(--color-terracotta); margin-inline-start: var(--space-2); }
+  .rating-link { font-size: var(--text-sm); }
   .testimonial-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));

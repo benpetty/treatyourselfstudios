@@ -81,6 +81,8 @@ export interface SiteSettings {
   giftCardUrl: string;
   shopUrl?: string;
   firstVisitOffer?: string;
+  googleRating?: number;
+  googleReviewUrl?: string;
   socialLinks?: { instagram?: string; facebook?: string; twitter?: string; yelp?: string };
 }
 
@@ -187,7 +189,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       siteTitle, tagline, siteDescription,
       logo{ asset->, alt, crop, hotspot },
       phone, phoneE164, email, address, geo, hoursNote, priceRange,
-      bookingUrl, giftCardUrl, shopUrl, firstVisitOffer, socialLinks
+      bookingUrl, giftCardUrl, shopUrl, firstVisitOffer, googleRating, googleReviewUrl, socialLinks
     }`,
   );
   return assertPresent( settings, "siteSettings singleton" );
