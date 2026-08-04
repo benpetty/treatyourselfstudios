@@ -7,6 +7,7 @@ import Hero from "../components/Hero.astro";
 import HoursLocation from "../components/HoursLocation.astro";
 import PortableText from "../components/PortableText.astro";
 import TestimonialCard from "../components/TestimonialCard.astro";
+import Ticker from "../components/Ticker.astro";
 import {
   getDeals,
   getHomePage,
@@ -29,6 +30,7 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
 ---
 <Layout title={ pageTitle } description={ homePage.seoDescription } settings={ settings }>
   <Hero homePage={ homePage } bookingUrl={ settings.bookingUrl } />
+  <Ticker settings={ settings } />
 
   <section class="section container welcome" aria-labelledby="welcome-heading">
     <p class="eyebrow">Welcome</p>

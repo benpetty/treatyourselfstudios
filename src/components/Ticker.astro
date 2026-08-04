@@ -1,0 +1,30 @@
+---
+import type { SiteSettings } from "../lib/sanity";
+
+interface Props {
+  settings: SiteSettings;
+}
+const { settings } = Astro.props;
+const tickerItems = [ settings.tagline, settings.firstVisitOffer, settings.hoursNote ]
+  .filter( ( item ): item is string => Boolean( item ) );
+---
+{ tickerItems.length > 0 && (
+  <div class="ticker" role="presentation">
+    <div class="ticker-track">
+      <span class="ticker-run">{ tickerItems.map( ( item ) => <span class="ticker-item">{ item }</span> ) }</span>
+      <span class="ticker-run" aria-hidden="true">{ tickerItems.map( ( item ) => <span class="ticker-item">{ item }</span> ) }</span>
+    </div>
+  </div>
+) }
+
+<style>
+  .ticker { overflow: hidden; background: var(--color-espresso); color: var(--color-blush); }
+  .ticker-track { display: flex; width: max-content; animation: ticker-scroll 30s linear infinite; }
+  .ticker-run { display: flex; }
+  .ticker-item { padding: var(--space-2) 0; font-size: var(--text-sm); white-space: nowrap; }
+  .ticker-item::after { content: "·"; margin-inline: var(--space-4); color: var(--color-terracotta); }
+  @keyframes ticker-scroll {
+    from { transform: translateX( 0 ); }
+    to { transform: translateX( -50% ); }
+  }
+</style>
