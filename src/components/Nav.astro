@@ -82,6 +82,9 @@ const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : und
     background: var(--color-ivory); border: 1px solid var(--color-line);
     border-radius: var(--radius-card); box-shadow: var(--shadow-card);
     flex-direction: column; align-items: stretch; display: none;
+    /* The class-targeted reset on .menu-links/.menu-utility doesn't reach this
+       nested ul, so it needs its own list-style/margin reset. */
+    list-style: none; margin: 0;
   }
   .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown { display: flex; }
   .dropdown a { display: block; padding: var(--space-1) var(--space-2); border-radius: 6px; }
