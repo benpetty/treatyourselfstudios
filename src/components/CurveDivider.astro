@@ -1,0 +1,17 @@
+---
+interface Props {
+  fill: string;
+  direction?: "down" | "up";
+}
+const { fill, direction = "down" } = Astro.props;
+const path = direction === "down"
+  ? "M0,34 Q300,-20 600,34 L600,34 L0,34 Z"
+  : "M0,0 Q300,54 600,0 L600,0 L0,0 Z";
+---
+<svg class="curve-divider" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+  <path d={ path } fill={ fill } />
+</svg>
+
+<style>
+  .curve-divider { display: block; width: 100%; height: clamp( 22px, 4vw, 44px ); }
+</style>
