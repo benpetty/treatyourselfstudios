@@ -2,7 +2,7 @@
 
 Marketing site for [Treat YourSelf Studios](https://treatyourselfstudios.net), an appointment-only esthetics studio in Seattle's Columbia City neighborhood — custom facials, waxing, lash & brow services, and body treatments.
 
-The site is a static [Astro](https://astro.build) build deployed to GitHub Pages. All content (services, prices, deals, FAQs, team, testimonials) lives in [Sanity](https://www.sanity.io) and is owner-editable through Sanity Studio; booking, gift cards, and retail all happen on Square. Publishing in Studio triggers a webhook that rebuilds and redeploys the site automatically.
+The site is a static [Astro](https://astro.build) build deployed to GitHub Pages. All content (services, prices, deals, FAQs, team, testimonials) lives in [Sanity](https://www.sanity.io) and is owner-editable through Sanity Studio; booking and gift cards happen on Square; retail links out to the legacy web store until the Square Online migration ([#15](https://github.com/benpetty/treatyourselfstudios/issues/15)) lands. Publishing in Studio triggers a webhook that rebuilds and redeploys the site automatically.
 
 ## Setup
 
