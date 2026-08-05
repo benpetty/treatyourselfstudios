@@ -2,13 +2,21 @@
 interface Props {
   fill: string;
   direction?: "down" | "up";
+  /** Color shown behind the curve — set to the adjacent section's background so no page-background sliver peeks through. */
+  background?: string;
 }
-const { fill, direction = "down" } = Astro.props;
+const { fill, direction = "down", background } = Astro.props;
 const path = direction === "down"
   ? "M0,34 Q300,-20 600,34 L600,34 L0,34 Z"
   : "M0,0 Q300,54 600,0 L600,0 L0,0 Z";
 ---
-<svg class="curve-divider" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true">
+<svg
+  class="curve-divider"
+  viewBox="0 0 600 34"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  style={ background ? `background: ${background}` : undefined }
+>
   <path d={ path } fill={ fill } />
 </svg>
 

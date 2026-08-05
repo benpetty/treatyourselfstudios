@@ -52,14 +52,19 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
 
   <DealBanner deals={ deals } />
 
-  <CurveDivider fill="var(--color-espresso)" direction="down" />
+  <CurveDivider fill="var(--color-espresso)" direction="down" background="var(--color-blush)" />
   <section class="gift-band" aria-label="Gift cards">
     <SucculentTexture stroke="var(--color-terracotta)" />
     <div class="container gift-band-inner">
       <GiftCardCallout giftCardUrl={ settings.giftCardUrl } />
     </div>
   </section>
-  <CurveDivider fill="var(--color-espresso)" direction="up" />
+  {/* Bottom curve abuts the blush testimonial band when present, the cream body otherwise. */}
+  <CurveDivider
+    fill="var(--color-espresso)"
+    direction="up"
+    background={ featuredTestimonials.length > 0 ? "var(--color-blush)" : undefined }
+  />
 
   { featuredTestimonials.length > 0 && (
     <section class="testimonial-band" aria-labelledby="testimonials-heading">
