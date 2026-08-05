@@ -145,11 +145,11 @@ Expected: astro check 0 errors, eslint clean, 80-page build completes.
 
 - [ ] **Step 7: Assert the built homepage**
 
-Three assertions against the built output (Astro inlines scoped component CSS into the page, so `dist/index.html` is the surface to grep):
+Three assertions against the built output. Astro bundles scoped component CSS into external `dist/_astro/*.css` files (it does NOT inline it into the page here), so the CSS bundles are the surface to grep — a `dist/index.html`-only grep passes vacuously:
 
-1. Rosette gone — Run: `grep -c "hero-rosette" dist/index.html` — Expected: `0` (grep exits non-zero on zero matches; that is the pass condition).
-2. Gradient gone — Run: `grep -c "linear-gradient(135deg" dist/index.html` — Expected: `0`. The hero was the only `135deg` gradient in the site, so any hit is a regression.
-3. Blush ground present — Run: `grep -c "background:var(--color-blush)" dist/index.html` — Expected: `1` or more (the hero rule; minified CSS drops the space after the colon).
+1. Rosette gone — Run: `grep -c "hero-rosette" dist/_astro/*.css dist/index.html` — Expected: `0` per file.
+2. Gradient gone — Run: `grep -c "linear-gradient(135deg" dist/_astro/*.css dist/index.html` — Expected: `0` per file. The hero was the only `135deg` gradient in the site, so any hit is a regression.
+3. Blush ground present — Run: `grep -ho "\.hero\[[^{]*{[^}]*background[^}]*}" dist/_astro/*.css` — Expected: a `.hero[data-astro-cid-…]{background:var(--color-blush);…}` rule, with the overlay gradient appearing only under `:has(.hero-image)`.
 
 - [ ] **Step 8: Commit**
 
