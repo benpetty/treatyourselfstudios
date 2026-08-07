@@ -4,7 +4,6 @@ import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/oswald/index.css";
 import "../styles/global.css";
 import type { SiteSettings } from "../lib/sanity";
-import { urlFor } from "../lib/image";
 import JsonLd from "./JsonLd.astro";
 
 interface Props {
@@ -16,7 +15,7 @@ const { title, description, settings } = Astro.props;
 const canonicalUrl = new URL( Astro.url.pathname, Astro.site );
 // Staging builds (NOINDEX=true repo variable) must never enter search indexes.
 const noindex = process.env.NOINDEX === "true";
-const ogImageUrl = settings.logo ? urlFor( settings.logo ).width( 1200 ).height( 630 ).fit( "crop" ).url() : undefined;
+const ogImageUrl = new URL( "/og-image.png", Astro.site ).href;
 
 const localBusiness = {
   "@context": "https://schema.org",
@@ -51,6 +50,6 @@ const localBusiness = {
 <meta property="og:title" content={ title } />
 <meta property="og:description" content={ description } />
 <meta property="og:url" content={ canonicalUrl } />
-{ ogImageUrl && <meta property="og:image" content={ ogImageUrl } /> }
+<meta property="og:image" content={ ogImageUrl } />
 <meta name="twitter:card" content="summary_large_image" />
 <JsonLd data={ localBusiness } />
