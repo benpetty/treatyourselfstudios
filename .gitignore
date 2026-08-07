@@ -10,3 +10,4 @@ studio/dist/
 studio/sanity.types.ts
 studio/schema.json
 .lighthouseci/
+.superpowers/

@@ -1,7 +1,7 @@
 import type { SanityClient } from "@sanity/client";
 import { uploadImage } from "./helpers";
 
-export const SITE_LOGO_ALT = "Treat YourSelf Studios logo — a green succulent inside a brush-stroke circle";
+export const SITE_LOGO_ALT = "Treat YourSelf Studios rosette mark — a green succulent line drawing";
 
 export async function buildSiteSettings( client: SanityClient ) {
   return {
@@ -9,7 +9,7 @@ export async function buildSiteSettings( client: SanityClient ) {
     _type: "siteSettings",
     logo: await uploadImage(
       client,
-      "docs/content-audit/images/treat-yourself-studios-sign-logo.jpg",
+      "docs/content-audit/images/rosette-mark.png",
       SITE_LOGO_ALT,
     ),
     siteTitle: "Treat YourSelf Studios",
