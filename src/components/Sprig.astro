@@ -7,21 +7,25 @@ interface Props {
 }
 const { mirrored = false } = Astro.props;
 ---
-<svg class:list={ [ "sprig", { "sprig--mirrored": mirrored } ] } viewBox="0 0 16 26" aria-hidden="true" focusable="false">
-  <path pathLength="100" style="--draw-delay: 0s" d="M6 25.5C5.2 21 6.4 16.5 8.6 12.6C10.2 9.8 10.8 7 10.2 4.4" />
-  <path pathLength="100" style="--draw-delay: 0.6s" d="M10.2 4.4C8.9 3.4 8.8 1.6 10.1 0.6C11.5 1.5 11.6 3.4 10.2 4.4Z" />
-  <path pathLength="100" style="--draw-delay: 1.4s" d="M8.9 12.1C11.2 12.2 13.6 10.6 14.8 8.1C12.3 7.8 9.9 9.6 8.9 12.1Z" />
-  <path pathLength="100" style="--draw-delay: 2.2s" d="M7.1 17.2C4.6 17.6 2 16.1 0.8 13.6C3.4 13.1 6 14.6 7.1 17.2Z" />
-  <path pathLength="100" style="--draw-delay: 3s" d="M6.3 21.6C7.9 20.4 10 20.3 11.6 21.3C10.1 22.6 7.9 22.7 6.3 21.6Z" />
+<svg class:list={ [ "sprig", { "sprig--mirrored": mirrored } ] } viewBox="0 0 24.2 35.8" aria-hidden="true" focusable="false">
+  <path pathLength="100" style="--draw-delay: 0s" d="M11.78 35.3C10.78 28.3 11.78 20.3 13.78 13.3C14.78 9.3 14.98 6.3 13.78 3.8" />
+  <path pathLength="100" style="--draw-delay: 0.5s" d="M13.78 3.8C12.38 2.9 12.58 1.1 13.78 0.5C14.98 1.2 15.08 3 13.78 3.8Z" />
+  <path pathLength="100" style="--draw-delay: 1s" d="M14.18 9.3C17.85 8.6 21.53 5.45 22.93 1.6C18.73 1.95 15.23 5.1 14.18 9.3Z" />
+  <path pathLength="100" style="--draw-delay: 1.5s" d="M13.38 15.3C9.18 14.95 4.98 11.8 3.23 7.25C7.78 7.25 11.8 10.58 13.38 15.3Z" />
+  <path pathLength="100" style="--draw-delay: 2s" d="M12.68 20.8C17.4 20.45 21.95 16.95 23.7 12.22C18.63 12.22 14.26 15.73 12.68 20.8Z" />
+  <path pathLength="100" style="--draw-delay: 2.5s" d="M11.88 26.8C6.98 26.62 2.25 22.95 0.5 17.87C5.75 18.05 10.13 21.73 11.88 26.8Z" />
 </svg>
 
 <style>
   .sprig {
-    flex: none; width: auto; height: 1.4em;
-    fill: none; stroke: currentColor; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round;
+    flex: none; width: auto; height: 2.6em;
+    fill: none; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round;
   }
   .sprig--mirrored { transform: scaleX(-1); }
   .sprig path {
+    /* Fixed screen-pixel line: a viewBox-unit stroke would shrink below 1px at
+       bar size and render mushy. */
+    vector-effect: non-scaling-stroke; stroke-width: 1.25px;
     stroke-dasharray: 100; stroke-dashoffset: 100;
     animation: sprig-draw 2.5s ease-out var(--draw-delay) forwards;
   }
