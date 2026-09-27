@@ -91,6 +91,17 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
+      # TEMPORARY (PR #26 CLS investigation) — remove before merge.
+      - name: CLS probe
+        run: |
+          mkdir -p /tmp/cls-probe
+          cp .github/diagnostics/cls-probe.mjs /tmp/cls-probe/
+          cd /tmp/cls-probe
+          npm init -y > /dev/null
+          npm install --no-audit --no-fund puppeteer-core@24 > /dev/null
+          fc-match sans-serif
+          fc-match serif
+          node cls-probe.mjs "$GITHUB_WORKSPACE/dist"
       - uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           configPath: ./lighthouserc.json
