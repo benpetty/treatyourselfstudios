@@ -1,0 +1,16 @@
+---
+import type { SanityImage } from "../lib/sanity";
+import { urlFor, widthAtHeight } from "../lib/image";
+
+interface Props {
+  logo: SanityImage;
+}
+const LOGO_HEIGHT = 44;
+const { logo } = Astro.props;
+---
+<img
+  src={ urlFor( logo ).height( LOGO_HEIGHT * 2 ).url() }
+  alt=""
+  width={ widthAtHeight( logo, LOGO_HEIGHT ) }
+  height={ LOGO_HEIGHT }
+/>

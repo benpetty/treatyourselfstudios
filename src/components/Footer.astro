@@ -1,6 +1,6 @@
 ---
 import type { SiteSettings } from "../lib/sanity";
-import { urlFor } from "../lib/image";
+import BrandLogo from "./BrandLogo.astro";
 import CurveDivider from "./CurveDivider.astro";
 import SucculentTexture from "./SucculentTexture.astro";
 
@@ -8,7 +8,6 @@ interface Props {
   settings: SiteSettings;
 }
 const { settings } = Astro.props;
-const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : undefined;
 const currentYear = new Date().getFullYear();
 const socialEntries = [
   { label: "Instagram", url: settings.socialLinks?.instagram },
@@ -30,7 +29,7 @@ const socialEntries = [
       </address>
       <div class="footer-brand-block">
         <div class="footer-brand-row">
-          { logoUrl && <img src={ logoUrl } alt="" height="44" /> }
+          { settings.logo && <BrandLogo logo={ settings.logo } /> }
           <p class="footer-brand">{ settings.siteTitle }</p>
         </div>
         { settings.tagline && <p class="footer-tagline">{ settings.tagline }</p> }

@@ -1,20 +1,19 @@
 ---
 import type { SiteSettings } from "../lib/sanity";
 import { getServiceCategories } from "../lib/sanity";
-import { urlFor } from "../lib/image";
+import BrandLogo from "./BrandLogo.astro";
 
 interface Props {
   settings: SiteSettings;
 }
 const { settings } = Astro.props;
 const categories = ( await getServiceCategories() ).filter( ( category ) => !category.isAddOnCategory );
-const logoUrl = settings.logo ? urlFor( settings.logo ).height( 96 ).url() : undefined;
 ---
 { settings.firstVisitOffer && <p class="announcement">{ settings.firstVisitOffer }</p> }
 <header class="header">
   <div class="header-inner container">
     <a class="brand" href="/">
-      { logoUrl && <img src={ logoUrl } alt="" height="44" /> }
+      { settings.logo && <BrandLogo logo={ settings.logo } /> }
       <span class="brand-mark">{ settings.siteTitle }</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
