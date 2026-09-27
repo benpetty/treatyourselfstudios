@@ -991,6 +991,11 @@
   resolved "https://registry.yarnpkg.com/@rolldown/pluginutils/-/pluginutils-1.0.1.tgz#e3fcee093fbb5ce765e1ad088ff4de2889f6f9be"
   integrity sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==
 
+"@sanity/asset-utils@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-2.3.0.tgz#c55e3260b19e06d6f6e5c16be657f89af7ac540e"
+  integrity sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==
+
 "@sanity/client@^8.7.0":
   version "8.7.0"
   resolved "https://registry.yarnpkg.com/@sanity/client/-/client-8.7.0.tgz#d5340333b8c7fd32d9aeeab7a823e6085ab2bbdf"
