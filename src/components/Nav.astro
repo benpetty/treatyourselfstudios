@@ -1,14 +1,13 @@
 ---
 import type { SiteSettings } from "../lib/sanity";
 import { getServiceCategories } from "../lib/sanity";
-import { urlFor } from "../lib/image";
+import BrandLogo from "./BrandLogo.astro";
 
 interface Props {
   settings: SiteSettings;
 }
 const { settings } = Astro.props;
 const categories = ( await getServiceCategories() ).filter( ( category ) => !category.isAddOnCategory );
-const logoUrl = settings.logo ? urlFor( settings.logo ).height( 72 ).url() : undefined;
 
 // Section match, so /services/facials/ still marks "Services" as the current page.
 const currentPath = Astro.url.pathname;
@@ -17,7 +16,7 @@ const currentFor = ( href: string ) => ( currentPath.startsWith( href ) ? "page"
 <header class="header">
   <div class="header-inner container">
     <a class="brand" href="/">
-      { logoUrl && <img src={ logoUrl } alt="" height="36" /> }
+      { settings.logo && <BrandLogo logo={ settings.logo } height={ 36 } /> }
       <span class="brand-mark">{ settings.siteTitle }</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
@@ -73,7 +72,6 @@ const currentFor = ( href: string ) => ( currentPath.startsWith( href ) ? "page"
   }
   .header-inner { display: flex; align-items: center; gap: var(--space-5); padding-block: var(--space-2); }
   .brand { display: flex; flex: none; align-items: center; gap: var(--space-2); text-decoration: none; }
-  .brand img { height: 36px; width: auto; }
   .brand-mark { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-espresso); white-space: nowrap; }
   .menu { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: var(--space-5); }
   /* Class-targeted, not `.menu ul`: the dropdown is also a ul, and an element
