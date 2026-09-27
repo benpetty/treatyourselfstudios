@@ -16,9 +16,8 @@
   --color-cream-muted: #d8cec4;  /* secondary text on dark grounds — AA on moss/espresso */
   --color-sage-mist: #b9c1ae;    /* line-art strokes / tertiary on dark */
 
-  --font-display: "Fraunces Variable", Georgia, serif;
-  --font-body: "Inter Variable", system-ui, sans-serif;
-  --font-display-condensed: "Oswald Variable", "Arial Narrow", sans-serif;
+  /* --font-body, --font-display, --font-display-condensed: defined by <Font> in
+     BaseHead (Astro Fonts API, see astro.config.mjs) with metric-matched fallbacks. */
 
   /* Type scale (fluid) */
   --text-xs: 0.8rem;
