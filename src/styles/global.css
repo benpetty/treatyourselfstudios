@@ -12,7 +12,7 @@
   --color-terracotta-bright: #d99a77; /* terracotta for text on dark grounds — AA on moss/espresso (~5.2:1) */
   --color-mist: #e6e9df;         /* soft section tint (sage mist; client: no pink) */
   --color-line: #e5dcd1;         /* borders, dividers */
-  --color-moss-deep: #2e3529;    /* dark band ground (footer) */
+  --color-moss-deep: #2e3529;    /* dark band ground (footer, gift band, ticker) */
   --color-cream-muted: #d8cec4;  /* secondary text on dark grounds — AA on moss/espresso */
   --color-sage-mist: #b9c1ae;    /* line-art strokes / tertiary on dark */
 
