@@ -2,7 +2,7 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
 import { loadEnv } from "vite";
-import { FONT_CSS_VARIABLES } from "./src/lib/fonts";
+import { SITE_FONTS } from "./src/lib/fonts";
 import { LEGACY_REDIRECT_PATHS } from "./src/lib/redirects";
 
 // Env-driven so the same pipeline serves staging (staging.treatyourselfstudios.net,
@@ -22,22 +22,15 @@ if( process.env.NOINDEX === undefined && fileEnv.NOINDEX !== undefined ) {
 // overrides on the generic family's local font) for each, so text wraps the
 // same before and after the web font swaps in. Without it, the swap reflowed
 // the header on CI's DejaVu fallback and failed Lighthouse CLS (#26).
-const fontsourceVariable = ( name, cssVariable, weightRange, genericFamily ) => ( {
-  provider: fontProviders.fontsource(),
-  name,
-  cssVariable,
-  weights: [ weightRange ],
-  styles: [ "normal" ],
-  fallbacks: [ genericFamily ],
-} );
-
 export default defineConfig( {
   site: SITE_URL,
-  fonts: [
-    fontsourceVariable( "Inter", FONT_CSS_VARIABLES.body, "100 900", "sans-serif" ),
-    fontsourceVariable( "Fraunces", FONT_CSS_VARIABLES.display, "100 900", "serif" ),
-    fontsourceVariable( "Oswald", FONT_CSS_VARIABLES.displayCondensed, "200 700", "sans-serif" ),
-  ],
+  fonts: SITE_FONTS.map( ( font ) => ( {
+    provider: fontProviders.local(),
+    name: font.name,
+    cssVariable: font.cssVariable,
+    fallbacks: [ font.genericFamily ],
+    options: { variants: [ { weight: font.weightRange, style: "normal", src: [ font.file ] } ] },
+  } ) ),
   integrations: [
     sitemap( {
       filter: ( page ) =>

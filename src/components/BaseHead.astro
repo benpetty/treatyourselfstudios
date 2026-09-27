@@ -2,7 +2,7 @@
 import { Font } from "astro:assets";
 import "../styles/global.css";
 import type { SiteSettings } from "../lib/sanity";
-import { FONT_CSS_VARIABLES } from "../lib/fonts";
+import { SITE_FONTS } from "../lib/fonts";
 import JsonLd from "./JsonLd.astro";
 
 interface Props {
@@ -40,7 +40,7 @@ const localBusiness = {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{ title }</title>
-{ Object.values( FONT_CSS_VARIABLES ).map( ( cssVariable ) => <Font cssVariable={ cssVariable } preload /> ) }
+{ SITE_FONTS.map( ( font ) => <Font cssVariable={ font.cssVariable } preload={ font.preload } /> ) }
 <meta name="description" content={ description } />
 { noindex && <meta name="robots" content="noindex, nofollow" /> }
 <link rel="canonical" href={ canonicalUrl } />
