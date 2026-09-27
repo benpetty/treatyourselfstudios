@@ -52,18 +52,18 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
 
   <DealBanner deals={ deals } />
 
-  <CurveDivider fill="var(--color-espresso)" direction="down" background="var(--color-blush)" />
+  <CurveDivider fill="var(--color-espresso)" direction="down" background="var(--color-mist)" />
   <section class="gift-band" aria-label="Gift cards">
     <SucculentTexture stroke="var(--color-terracotta)" />
     <div class="container gift-band-inner">
       <GiftCardCallout giftCardUrl={ settings.giftCardUrl } />
     </div>
   </section>
-  {/* Bottom curve abuts the blush testimonial band when present, the cream body otherwise. */}
+  {/* Bottom curve abuts the mist testimonial band when present, the cream body otherwise. */}
   <CurveDivider
     fill="var(--color-espresso)"
     direction="up"
-    background={ featuredTestimonials.length > 0 ? "var(--color-blush)" : undefined }
+    background={ featuredTestimonials.length > 0 ? "var(--color-mist)" : undefined }
   />
 
   { featuredTestimonials.length > 0 && (
@@ -116,7 +116,7 @@ const pageTitle = `${homePage.seoTitle} | ${settings.siteTitle}`;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--space-4);
   }
-  .testimonial-band { background: var(--color-blush); padding-block: var(--space-6); }
+  .testimonial-band { background: var(--color-mist); padding-block: var(--space-6); }
   .rating-header { text-align: center; margin-block-end: var(--space-4); }
   .rating-figure { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); color: var(--color-espresso); }
   .rating-stars { color: var(--color-terracotta); margin-inline-start: var(--space-2); }

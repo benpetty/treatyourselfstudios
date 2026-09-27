@@ -8,12 +8,15 @@ interface Props {
 }
 const { settings } = Astro.props;
 const categories = ( await getServiceCategories() ).filter( ( category ) => !category.isAddOnCategory );
+
+// Section match, so /services/facials/ still marks "Services" as the current page.
+const currentPath = Astro.url.pathname;
+const currentFor = ( href: string ) => ( currentPath.startsWith( href ) ? "page" : undefined );
 ---
-{ settings.firstVisitOffer && <p class="announcement">{ settings.firstVisitOffer }</p> }
 <header class="header">
   <div class="header-inner container">
     <a class="brand" href="/">
-      { settings.logo && <BrandLogo logo={ settings.logo } /> }
+      { settings.logo && <BrandLogo logo={ settings.logo } height={ 36 } /> }
       <span class="brand-mark">{ settings.siteTitle }</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
@@ -23,7 +26,7 @@ const categories = ( await getServiceCategories() ).filter( ( category ) => !cat
     <nav id="site-menu" class="menu" data-nav-menu aria-label="Site">
       <ul class="menu-links">
         <li class="has-dropdown">
-          <a href="/services/">Services</a>
+          <a href="/services/" aria-current={ currentFor( "/services/" ) }>Services<span class="caret" aria-hidden="true"></span></a>
           <ul class="dropdown">
             { categories.map( ( category ) => (
               <li><a href={ `/services/${category.slug.current}/` }>{ category.menuLabel ?? category.title }</a></li>
@@ -31,17 +34,23 @@ const categories = ( await getServiceCategories() ).filter( ( category ) => !cat
             <li><a href="/services/">All Services</a></li>
           </ul>
         </li>
-        <li><a href="/packages/">Packages &amp; Deals</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/faq/">FAQ</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/packages/" aria-current={ currentFor( "/packages/" ) }>Packages &amp; Deals</a></li>
+        <li><a href="/about/" aria-current={ currentFor( "/about/" ) }>About</a></li>
+        <li><a href="/faq/" aria-current={ currentFor( "/faq/" ) }>FAQ</a></li>
+        <li><a href="/contact/" aria-current={ currentFor( "/contact/" ) }>Contact</a></li>
+        { settings.shopUrl ? (
+          <li class="has-dropdown">
+            <a href={ settings.shopUrl } rel="noopener">Shop<span class="caret" aria-hidden="true"></span></a>
+            <ul class="dropdown">
+              <li><a href={ settings.shopUrl } rel="noopener">Shop Products</a></li>
+              <li><a href={ settings.giftCardUrl } rel="noopener">Gift Cards</a></li>
+            </ul>
+          </li>
+        ) : (
+          <li><a href={ settings.giftCardUrl } rel="noopener">Gift Cards</a></li>
+        ) }
       </ul>
-      <ul class="menu-utility">
-        <li><a href={ settings.giftCardUrl } rel="noopener">Gift Cards</a></li>
-        { settings.shopUrl && <li><a href={ settings.shopUrl } rel="noopener">Shop</a></li> }
-        <li><a href={ `tel:${settings.phoneE164}` }>{ settings.phone }</a></li>
-        <li><a class="button" href={ settings.bookingUrl } rel="noopener">Book Now</a></li>
-      </ul>
+      <a class="button" href={ settings.bookingUrl } rel="noopener">Book Now</a>
     </nav>
   </div>
 </header>
@@ -57,36 +66,45 @@ const categories = ( await getServiceCategories() ).filter( ( category ) => !cat
 </script>
 
 <style>
-  .announcement {
-    margin: 0; padding: var(--space-1) var(--space-3); text-align: center;
-    background: var(--color-blush); color: var(--color-espresso); font-size: var(--text-sm);
-  }
   .header {
     position: sticky; top: 0; z-index: 10;
     background: var(--color-cream); border-bottom: 1px solid var(--color-line);
   }
-  .header-inner { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-2); }
-  .brand { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; }
-  .brand-mark { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-espresso); }
-  .menu { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: var(--space-4); }
+  .header-inner { display: flex; align-items: center; gap: var(--space-5); padding-block: var(--space-2); }
+  .brand { display: flex; flex: none; align-items: center; gap: var(--space-2); text-decoration: none; }
+  .brand-mark { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; color: var(--color-espresso); white-space: nowrap; }
+  .menu { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: var(--space-5); }
   /* Class-targeted, not `.menu ul`: the dropdown is also a ul, and an element
      selector's extra specificity would override its at-rest `display: none`. */
-  .menu-links, .menu-utility { display: flex; align-items: center; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
-  .menu a:not(.button) { text-decoration: none; color: var(--color-espresso); }
-  .menu a:not(.button):hover { color: var(--color-sage-deep); }
+  .menu-links { display: flex; align-items: center; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
+  .menu a:not(.button) { text-decoration: none; color: var(--color-espresso); white-space: nowrap; }
+  .menu .button { white-space: nowrap; padding: 0.7em 1.6em; }
+  /* Top-level links share one underline: drawn in on hover, held for the current page. */
+  .menu-links > li > a { position: relative; display: inline-flex; align-items: center; gap: 0.35em; padding-block: var(--space-1); font-weight: 500; }
+  .menu-links > li > a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: var(--color-sage-deep); transform: scaleX(0); transform-origin: left;
+    transition: transform 180ms ease;
+  }
+  .menu-links > li > a:hover::after, .menu-links > li > a[aria-current="page"]::after { transform: scaleX(1); }
+  .caret {
+    width: 0.4em; height: 0.4em; margin-top: -0.2em;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); opacity: 0.7;
+  }
   .has-dropdown { position: relative; }
   .dropdown {
     position: absolute; top: 100%; left: 0; min-width: 13rem; padding: var(--space-2);
     background: var(--color-ivory); border: 1px solid var(--color-line);
     border-radius: var(--radius-card); box-shadow: var(--shadow-card);
     flex-direction: column; align-items: stretch; display: none;
-    /* The class-targeted reset on .menu-links/.menu-utility doesn't reach this
-       nested ul, so it needs its own list-style/margin reset. */
+    /* The class-targeted reset on .menu-links doesn't reach this nested ul, so
+       it needs its own list-style/margin reset. */
     list-style: none; margin: 0;
   }
   .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown { display: flex; }
   .dropdown a { display: block; padding: var(--space-1) var(--space-2); border-radius: 6px; }
-  .dropdown a:hover { background: var(--color-blush); }
+  .dropdown a:hover { background: var(--color-mist); }
   .nav-toggle { display: none; background: none; border: none; padding: var(--space-2); cursor: pointer; }
   .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after {
     display: block; width: 24px; height: 2px; background: var(--color-espresso); content: "";
@@ -94,16 +112,18 @@ const categories = ( await getServiceCategories() ).filter( ( category ) => !cat
   .nav-toggle-bars { position: relative; }
   .nav-toggle-bars::before { position: absolute; top: -7px; }
   .nav-toggle-bars::after { position: absolute; top: 7px; }
-  @media (max-width: 56rem) {
+  @media (max-width: 64rem) {
     .nav-toggle { display: block; margin-left: auto; }
     .menu { display: none; }
     .menu.is-open {
-      display: flex; flex-direction: column; align-items: stretch;
+      display: flex; flex-direction: column; align-items: stretch; gap: var(--space-3);
       position: absolute; top: 100%; left: 0; right: 0; padding: var(--space-3) var(--space-4);
       background: var(--color-cream); border-bottom: 1px solid var(--color-line);
     }
-    .menu-links, .menu-utility { flex-direction: column; align-items: stretch; }
-    .menu a { padding-block: var(--space-1); }
+    .menu-links { flex-direction: column; align-items: stretch; gap: var(--space-1); }
+    .menu-links > li > a { align-self: flex-start; }
+    .menu .button { align-self: flex-start; }
+    .caret { display: none; }
     .dropdown { position: static; display: flex; border: none; box-shadow: none; background: none; padding-left: var(--space-3); }
   }
 </style>
