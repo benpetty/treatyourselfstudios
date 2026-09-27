@@ -39,14 +39,14 @@ Optional: `NOINDEX=true` (staging builds only) adds a robots `noindex` meta and 
 | `make lint` | Run ESLint |
 | `make format` | Auto-fix lint and formatting issues |
 | `make studio` | Start the Sanity Studio dev server at localhost:3333 |
-| `make deploy-studio` | Deploy Sanity Studio to `*.sanity.studio` hosting |
+| `make deploy-studio` | Deploy Sanity Studio to [treatyourself.sanity.studio](https://treatyourself.sanity.studio) |
 | `make seed` | Seed/refresh Sanity content from `scripts/seed-data/` |
 | `make set-logo LOGO=<file>` | Upload an image and set it as the site logo in Sanity |
 | `make set-hero HERO=<file> ALT="…"` | Upload an image and set it as the homepage hero in Sanity |
 
 ## Editing content
 
-Owners edit everything in Sanity Studio (hosted at the project's `*.sanity.studio` URL, or locally via `make studio`). Publishing a change triggers a `repository_dispatch` webhook → GitHub Actions rebuild → Pages deploy; changes go live in about two minutes.
+Owners edit everything in Sanity Studio (hosted at [treatyourself.sanity.studio](https://treatyourself.sanity.studio), or locally via `make studio`). Publishing a change triggers a `repository_dispatch` webhook → GitHub Actions rebuild → Pages deploy; changes go live in about two minutes.
 
 The seed in `scripts/seed-data/` is idempotent (`createOrReplace` with deterministic IDs) — re-running `make seed` refreshes documents to the seeded baseline without duplicating anything. It will overwrite Studio edits to seeded documents, so treat it as a bootstrap/reset tool, not routine maintenance.
 
