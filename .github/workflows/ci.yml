@@ -15,21 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # Before setup-node, so its `cache: pnpm` can find pnpm. Reads the
+      # version from package.json's packageManager field.
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version: "24"
-          cache: yarn
-      - run: yarn install --frozen-lockfile
-      # `yarn run check`, not `yarn check` — the bare form is yarn v1's built-in
-      # integrity command and silently skips the package script.
-      - run: yarn run check
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
         env:
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
           SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
           PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.PUBLIC_FORMSPREE_ENDPOINT }}
           SITE_URL: ${{ vars.SITE_URL }}
-      - run: yarn lint
+      - run: pnpm lint
 
   audit:
     name: Audit

@@ -3,7 +3,7 @@ import { SITE_LOGO_ALT } from "./seed-data/siteSettings";
 import { createWriteClient } from "./sanity-client";
 
 const logoPath = process.argv[ 2 ];
-if( !logoPath ) throw new Error( "Usage: yarn tsx scripts/set-logo.ts <path-to-logo-image>" );
+if( !logoPath ) throw new Error( "Usage: pnpm tsx scripts/set-logo.ts <path-to-logo-image>" );
 
 const client = createWriteClient();
 

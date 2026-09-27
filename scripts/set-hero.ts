@@ -4,7 +4,7 @@ import { createWriteClient } from "./sanity-client";
 const heroPath = process.argv[ 2 ];
 const heroAlt = process.argv[ 3 ];
 if( !heroPath || !heroAlt ) {
-  throw new Error( 'Usage: yarn tsx scripts/set-hero.ts <path-to-hero-image> "<alt text>"' );
+  throw new Error( 'Usage: pnpm tsx scripts/set-hero.ts <path-to-hero-image> "<alt text>"' );
 }
 
 const client = createWriteClient();
