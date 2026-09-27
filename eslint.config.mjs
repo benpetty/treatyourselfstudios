@@ -4,8 +4,7 @@ import eslintPluginAstro from "eslint-plugin-astro";
 import typescriptEslint from "typescript-eslint";
 
 export default typescriptEslint.config(
-  // TEMPORARY: .github/diagnostics/ holds the PR #26 CLS probe; remove with it.
-  { ignores: ["dist/", ".astro/", "node_modules/", "studio/", ".github/diagnostics/"] },
+  { ignores: ["dist/", ".astro/", "node_modules/", "studio/"] },
   eslintJs.configs.recommended,
   ...typescriptEslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
