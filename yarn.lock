@@ -867,6 +867,11 @@
     estree-walker "^2.0.2"
     picomatch "^4.0.2"
 
+"@sanity/asset-utils@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-2.3.0.tgz#c55e3260b19e06d6f6e5c16be657f89af7ac540e"
+  integrity sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==
+
 "@sanity/client@^7.21.0":
   version "7.25.0"
   resolved "https://registry.yarnpkg.com/@sanity/client/-/client-7.25.0.tgz#b68edf67e0b502ac88013e05871ff4f8312f7bf4"
