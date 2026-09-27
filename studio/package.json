@@ -1,6 +1,7 @@
 {
   "name": "treatyourselfstudios-studio",
   "private": true,
+  "packageManager": "pnpm@12.6.0",
   "version": "1.0.0",
   "scripts": {
     "dev": "sanity dev",

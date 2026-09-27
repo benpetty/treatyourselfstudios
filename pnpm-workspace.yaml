@@ -1,0 +1,8 @@
+# pnpm settings only. There is no `packages:` list, so this is not a
+# workspace: studio/ stays a separate project with its own lockfile and its
+# own pnpm-workspace.yaml.
+
+# Dependency install scripts are blocked unless listed here. esbuild ships a
+# prebuilt platform binary and uses postinstall to verify it.
+allowBuilds:
+  esbuild: true

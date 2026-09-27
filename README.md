@@ -6,6 +6,8 @@ The site is a static [Astro](https://astro.build) build deployed to GitHub Pages
 
 ## Setup
 
+Requires Node 24 and pnpm (`npm install -g pnpm`). Any pnpm switches itself to the version pinned in `package.json`'s `packageManager` field.
+
 ```sh
 git clone <this repo> && cd treatyourselfstudios
 make install

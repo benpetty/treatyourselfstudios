@@ -1,0 +1,7 @@
+# pnpm settings only. Its presence also stops pnpm walking up to the root's
+# pnpm-workspace.yaml, which keeps the Studio a separate project.
+
+# Dependency install scripts are blocked unless listed here. None of the
+# Studio's dependencies currently need one; pnpm install fails naming any
+# that start to.
+allowBuilds: {}
